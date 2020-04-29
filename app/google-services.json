@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "3136942906",
+    "firebase_url": "https://my-application-af75c.firebaseio.com",
+    "project_id": "my-application-af75c",
+    "storage_bucket": "my-application-af75c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3136942906:android:1327f5734867a61902d603",
+        "android_client_info": {
+          "package_name": "com.cloudlevi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3136942906-8thou1kf9f2o2qo78l07vrqtp6ksnqum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cloudlevi",
+            "certificate_hash": "554b3fb1b22a71aef791bf6255d30d780867cce5"
+          }
+        },
+        {
+          "client_id": "3136942906-4j9j2npvrnvuel4nskpe09i9drn9t7av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4I1o06QDeEXRLYrMF4CK7nXUuWGGqclc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3136942906-4j9j2npvrnvuel4nskpe09i9drn9t7av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
