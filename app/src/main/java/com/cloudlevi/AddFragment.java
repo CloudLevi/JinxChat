@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -79,6 +83,11 @@ public class AddFragment extends Fragment {
 
     private AddFragmentViewModel viewModel;
 
+    private DatabaseReference userNameReference;
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String fireBaseUserId;
+    private String fireBaseUserName;
+
 
     @Nullable
     @Override
@@ -109,6 +118,21 @@ public class AddFragment extends Fragment {
         price_choiceTV = v.findViewById(R.id.price_choiceTV);
 
         addScroll = v.findViewById(R.id.add_scroll);
+
+        fireBaseUserId = firebaseUser.getUid();
+        userNameReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        userNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    fireBaseUserName = dataSnapshot.child(fireBaseUserId).child("username").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
 
@@ -252,6 +276,7 @@ public class AddFragment extends Fragment {
             }
         });
 
+
     }
 
     private void openFileChooser(){
@@ -269,7 +294,9 @@ public class AddFragment extends Fragment {
                 && data != null && data.getData() != null){
             mImageUri = data.getData();
 
-            Picasso.get().load(mImageUri).into(mImageView);
+            Picasso.get()
+                    .load(mImageUri)
+                    .into(mImageView);
         }
     }
 
@@ -308,7 +335,8 @@ public class AddFragment extends Fragment {
                                           category_choiceTV.getText().toString().trim(),
                                           brand_choiceTV.getText().toString().trim(),
                                           condition_choiceTV.getText().toString().trim(),
-                                          price_choiceTV.getText().toString().trim());
+                                          price_choiceTV.getText().toString().trim(),
+                                          fireBaseUserName);
                                   String uploadId = mDataBaseRef.push().getKey();
                                   mDataBaseRef.child(uploadId).setValue(upload);
                               }

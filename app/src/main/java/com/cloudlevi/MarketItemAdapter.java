@@ -35,11 +35,11 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
         AddFragmentModel itemCurrent = mUploads.get(position);
         Picasso.get()
                 .load(itemCurrent.getImageURL())
+                .centerCrop()
                 .placeholder(R.mipmap.ic_round_160_green)
                 .fit()
-                .centerCrop()
                 .into(holder.imageView);
-        holder.textViewTitle.setText(itemCurrent.getTitleModel());
+        holder.textViewUser.setText(itemCurrent.getUsernameModel());
         holder.textViewPrice.setText(itemCurrent.getPriceModel());
         holder.textViewBrand.setText(itemCurrent.getBrandModel());
         holder.textViewCondition.setText(itemCurrent.getConditionModel());
@@ -51,7 +51,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
     }
 
     public class MarketItemViewHolder extends RecyclerView.ViewHolder{
-        public TextView textViewTitle;
+        public TextView textViewUser;
         public ImageView imageView;
         public TextView textViewPrice;
         public TextView textViewBrand;
@@ -60,7 +60,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
         public MarketItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewTitle = itemView.findViewById(R.id.market_item_title);
+            textViewUser = itemView.findViewById(R.id.market_item_user);
             imageView = itemView.findViewById(R.id.market_item_image);
             textViewPrice = itemView.findViewById(R.id.market_item_price);
             textViewBrand = itemView.findViewById(R.id.market_item_brand);

@@ -19,11 +19,14 @@ public class AddFragmentModel {
 
     private int scrollPositionY;
 
+    //User data:
+    private String usernameModel;
+
     public AddFragmentModel(){
 
     }
 
-    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel){
+    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel){
 
         titleModel = mtitleModel;
         imageURL = mimageURL;
@@ -32,6 +35,7 @@ public class AddFragmentModel {
         brandModel = mbrandModel;
         conditionModel = mconditionModel;
         priceModel = mpriceModel;
+        usernameModel = musernameModel;
 
     }
 
@@ -114,5 +118,13 @@ public class AddFragmentModel {
 
     public void setScrollPositionY(int scrollPositionY) {
         this.scrollPositionY = scrollPositionY;
+    }
+
+    public String getUsernameModel() {
+        return usernameModel;
+    }
+
+    public void setUsernameModel(String usernameModel) {
+        this.usernameModel = usernameModel;
     }
 }

@@ -1,14 +1,20 @@
 package com.cloudlevi;
 
+import androidx.annotation.AnimatorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,18 +22,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
-    EditText login,password;
+    EditText username,email,password;
 
     FirebaseAuth auth;
     DatabaseReference reference;
+
+    LinearLayout usernameForm;
 
     @Override
     protected void onStart() {
@@ -53,8 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        login = findViewById(R.id.login);
+        username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        usernameForm = findViewById(R.id.usernameForm);
 
 
 
@@ -62,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String stringLogin = login.getText().toString();
+                String stringLogin = email.getText().toString();
                 String stringPass = password.getText().toString();
 
                 if(TextUtils.isEmpty(stringLogin) || TextUtils.isEmpty(stringPass)){
@@ -79,11 +93,10 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else{
-                                        Toast.makeText(MainActivity.this, "Authentication falied", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-
                 }
             }
         });
@@ -92,24 +105,64 @@ public class MainActivity extends AppCompatActivity {
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stringLogin = login.getText().toString().trim();
-                String stringPass = password.getText().toString().trim();
+                if(usernameForm.getVisibility() == View.GONE){
 
-                if(TextUtils.isEmpty(stringLogin) || TextUtils.isEmpty(stringPass)){
+                    Toast.makeText(MainActivity.this, "Please choose a username", Toast.LENGTH_SHORT).show();
+                    View view = findViewById(R.id.usernameForm);
+                    view.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                final String stringUsername = username.getText().toString().trim();
+                final String stringLogin = email.getText().toString().trim();
+                final String stringPass = password.getText().toString().trim();
+
+                if(TextUtils.isEmpty(stringUsername) || TextUtils.isEmpty(stringLogin) || TextUtils.isEmpty(stringPass)){
                     Toast.makeText(MainActivity.this, "Fill in the blanks", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 6){
                     Toast.makeText(MainActivity.this, "The password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
                 } else {
-                    register(stringLogin, stringPass);
+
+                    DatabaseReference userNameReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+                    userNameReference.addListenerForSingleValueEvent(
+                            new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    int count = 0;
+                                    for(DataSnapshot data: dataSnapshot.getChildren()){
+                                        System.out.println(data);
+                                        System.out.println(data.child("username"));
+                                        System.out.println(data.child("username").getValue());
+                                        if(data.child("username").getValue().toString().equals(stringUsername)) {
+                                            System.out.println("YEAH");
+                                            count++;
+                                        }
+                                    }
+
+                                    if(count == 0){
+                                        register(stringUsername, stringLogin, stringPass);
+                                    }
+                                    else{
+                                        Toast.makeText(MainActivity.this, "This username is unavailable", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    System.out.println(databaseError.getMessage());
+                                }
+                            }
+                    );
                 }
 
-            }
+            }}
         });
 
 
     }
 
-    private void register(String stringLogin, String stringPass) {
+    private void register(final String stringUsername, String stringLogin, String stringPass) {
         auth.createUserWithEmailAndPassword(stringLogin, stringPass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -125,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", userId);
+                            hashMap.put("username", stringUsername);
                             hashMap.put("imageURL", "default");
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
