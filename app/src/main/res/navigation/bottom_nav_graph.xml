@@ -9,7 +9,15 @@
         android:id="@+id/homeFragment"
         android:name="com.cloudlevi.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_marketItemFragment"
+            app:destination="@id/marketItemFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.cloudlevi.AddFragment"
@@ -107,6 +115,19 @@
         <action
             android:id="@+id/action_priceChoiceFragment_to_addFragment"
             app:destination="@id/addFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/marketItemFragment"
+        android:name="com.cloudlevi.MarketItemFragment"
+        android:label="fragment_market_item"
+        tools:layout="@layout/fragment_market_item" >
+        <action
+            android:id="@+id/action_marketItemFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"

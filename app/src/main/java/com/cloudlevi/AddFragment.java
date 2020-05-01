@@ -64,6 +64,7 @@ public class AddFragment extends Fragment {
 
     private StorageReference mStorageRef;
     private DatabaseReference mDataBaseRef;
+    private DatabaseReference mDataBaseRefUser;
 
     private RelativeLayout cat_choiceLayout;
     private RelativeLayout brand_choiceLayout;
@@ -103,9 +104,12 @@ public class AddFragment extends Fragment {
 
         mImageView = v.findViewById(R.id.image);
         mProgressBar = v.findViewById(R.id.progress_bar);
+        fireBaseUserId = firebaseUser.getUid();
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mDataBaseRefUser = FirebaseDatabase.getInstance().getReference("Users/" + fireBaseUserId + "/UserUploads");
 
         cat_choiceLayout = v.findViewById(R.id.category_choice);
         brand_choiceLayout = v.findViewById(R.id.brand_choice);
@@ -119,7 +123,6 @@ public class AddFragment extends Fragment {
 
         addScroll = v.findViewById(R.id.add_scroll);
 
-        fireBaseUserId = firebaseUser.getUid();
         userNameReference = FirebaseDatabase.getInstance().getReference().child("Users");
         userNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -336,9 +339,11 @@ public class AddFragment extends Fragment {
                                           brand_choiceTV.getText().toString().trim(),
                                           condition_choiceTV.getText().toString().trim(),
                                           price_choiceTV.getText().toString().trim(),
-                                          fireBaseUserName);
+                                          fireBaseUserName,
+                                          fireBaseUserId);
                                   String uploadId = mDataBaseRef.push().getKey();
                                   mDataBaseRef.child(uploadId).setValue(upload);
+                                  mDataBaseRefUser.child(uploadId).setValue(upload);
                               }
                           });
                       }

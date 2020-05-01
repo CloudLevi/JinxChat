@@ -8,6 +8,7 @@ import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
@@ -36,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     EditText username,email,password;
 
     FirebaseAuth auth;
-    DatabaseReference reference;
+    DatabaseReference databasereference;
+    StorageReference storageref;
+    String profPicDownloadURL;
 
     LinearLayout usernameForm;
 
@@ -129,18 +135,14 @@ public class MainActivity extends AppCompatActivity {
                             new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    int count = 0;
+                                    boolean userNameExists = false;
                                     for(DataSnapshot data: dataSnapshot.getChildren()){
-                                        System.out.println(data);
-                                        System.out.println(data.child("username"));
-                                        System.out.println(data.child("username").getValue());
                                         if(data.child("username").getValue().toString().equals(stringUsername)) {
-                                            System.out.println("YEAH");
-                                            count++;
+                                            userNameExists = true;
                                         }
                                     }
 
-                                    if(count == 0){
+                                    if(!userNameExists){
                                         register(stringUsername, stringLogin, stringPass);
                                     }
                                     else{
@@ -172,25 +174,36 @@ public class MainActivity extends AppCompatActivity {
 
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             assert firebaseUser != null;
-                            String userId = firebaseUser.getUid();
+                            final String userId = firebaseUser.getUid();
 
-                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                            databasereference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("id", userId);
-                            hashMap.put("username", stringUsername);
-                            hashMap.put("imageURL", "default");
 
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            storageref = FirebaseStorage.getInstance().getReference().child("profilepics").child("DefaultProfilePic.png");
+                            storageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
+                                public void onSuccess(Uri uri) {
+                                    final HashMap<String, String> hashMap = new HashMap<>();
+                                    hashMap.put("id", userId);
+                                    hashMap.put("username", stringUsername);
+                                    profPicDownloadURL = uri.toString();
+                                    hashMap.put("imageURL", profPicDownloadURL);
+                                    System.out.println(profPicDownloadURL + "INCLASS-------------");
 
+                                    databasereference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            finish();
+
+                                        }
+                                    });
                                 }
                             });
+
+
                         } else {
                             Toast.makeText(MainActivity.this, "These credentials are unavailable", Toast.LENGTH_SHORT).show();
                         }

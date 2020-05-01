@@ -1,9 +1,13 @@
 package com.cloudlevi;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 
-public class AddFragmentModel {
+import com.google.firebase.database.Exclude;
+
+public class AddFragmentModel implements Parcelable {
 
     private ImageView imageModel;
 
@@ -21,12 +25,13 @@ public class AddFragmentModel {
 
     //User data:
     private String usernameModel;
+    private String userIdModel;
 
     public AddFragmentModel(){
 
     }
 
-    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel){
+    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel, String muserIdModel){
 
         titleModel = mtitleModel;
         imageURL = mimageURL;
@@ -36,9 +41,36 @@ public class AddFragmentModel {
         conditionModel = mconditionModel;
         priceModel = mpriceModel;
         usernameModel = musernameModel;
+        userIdModel = muserIdModel;
 
     }
 
+
+    protected AddFragmentModel(Parcel in) {
+        titleModel = in.readString();
+        descriptionModel = in.readString();
+        categoryModel = in.readString();
+        brandModel = in.readString();
+        conditionModel = in.readString();
+        priceModel = in.readString();
+        imageURL = in.readString();
+        imageUri = in.readParcelable(Uri.class.getClassLoader());
+        scrollPositionY = in.readInt();
+        usernameModel = in.readString();
+        userIdModel = in.readString();
+    }
+
+    public static final Creator<AddFragmentModel> CREATOR = new Creator<AddFragmentModel>() {
+        @Override
+        public AddFragmentModel createFromParcel(Parcel in) {
+            return new AddFragmentModel(in);
+        }
+
+        @Override
+        public AddFragmentModel[] newArray(int size) {
+            return new AddFragmentModel[size];
+        }
+    };
 
     public String getTitleModel() {
         return titleModel;
@@ -112,10 +144,12 @@ public class AddFragmentModel {
         this.imageURL = imageURL;
     }
 
+    @Exclude
     public int getScrollPositionY() {
         return scrollPositionY;
     }
 
+    @Exclude
     public void setScrollPositionY(int scrollPositionY) {
         this.scrollPositionY = scrollPositionY;
     }
@@ -126,5 +160,33 @@ public class AddFragmentModel {
 
     public void setUsernameModel(String usernameModel) {
         this.usernameModel = usernameModel;
+    }
+
+    public String getUserIdModel() {
+        return userIdModel;
+    }
+
+    public void setUserIdModel(String userIdModel) {
+        this.userIdModel = userIdModel;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(titleModel);
+        dest.writeString(descriptionModel);
+        dest.writeString(categoryModel);
+        dest.writeString(brandModel);
+        dest.writeString(conditionModel);
+        dest.writeString(priceModel);
+        dest.writeString(imageURL);
+        dest.writeParcelable(imageUri, flags);
+        dest.writeInt(scrollPositionY);
+        dest.writeString(usernameModel);
+        dest.writeString(userIdModel);
     }
 }

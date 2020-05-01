@@ -40,6 +40,9 @@ public class HomeFragment extends Fragment {
     private List<AddFragmentModel> mAddFragmentModels;
 
     private ProgressBar mProgressCircle;
+
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String fireBaseUserId;
     
 
     @Override
@@ -52,6 +55,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         mRecyclerView = v.findViewById(R.id.market_item_list);
@@ -62,6 +66,7 @@ public class HomeFragment extends Fragment {
 
         mAddFragmentModels = new ArrayList<>();
 
+        fireBaseUserId = firebaseUser.getUid();
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         mDataBaseRef.addValueEventListener(new ValueEventListener() {
