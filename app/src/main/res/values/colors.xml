@@ -5,9 +5,11 @@
     <color name="colorPrimaryComplementary">#FFB785</color>
     <color name="TitleTextColor">#f5fcff</color>
     <color name="PlainTextColor">#000000</color>
+    <color name="PlainTextColor2">#606060</color>
     <color name="PlainHintColor">#722A2A2B</color>
     <color name="colorAccent">#CCD1346D</color>
     <color name="BarColor">#37000000</color>
     <color name="White">#FFFFFF</color>
-    <color name="BottomNavigationViewIconTint">#281E39</color>
+    <color name="BottomNavigationViewTintTrue">#281E39</color>
+    <color name="BottomNavigationViewTintFalse">#75543d</color>
 </resources>

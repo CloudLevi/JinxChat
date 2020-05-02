@@ -28,9 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            app:itemIconTint="@drawable/selector_bottombar_icon"
+            app:itemTextColor="@drawable/selector_bottombar_icon"
             app:menu="@menu/bottom_navigation"
-            app:itemIconTint="@color/BottomNavigationViewIconTint"
-            app:itemTextColor="@color/BottomNavigationViewIconTint"
+
             android:background="@color/colorPrimaryComplementary"/>
 
 

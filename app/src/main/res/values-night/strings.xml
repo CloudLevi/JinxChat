@@ -32,6 +32,5 @@
     <string name="password">Password:</string>
     <string name="app_settings">App settings</string>
     <string name="theme">Theme:</string>
-    <string name="appThemeTV">Light</string>
-    <string name="language">Language</string>
+    <string name="appThemeTV">Dark</string>
 </resources>

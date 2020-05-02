@@ -3,11 +3,13 @@ package com.cloudlevi;
 import androidx.annotation.AnimatorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -75,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         usernameForm = findViewById(R.id.usernameForm);
-
-
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
