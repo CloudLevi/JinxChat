@@ -66,6 +66,13 @@
         <argument android:name="category_choiceArgument"
             android:defaultValue="None"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_profileFragment_to_userPageFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:destination="@id/userPageFragment" />
 
     </fragment>
     <fragment
@@ -132,5 +139,25 @@
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_marketItemFragment_to_userPageFragment"
+            app:destination="@id/userPageFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/userPageFragment"
+        android:name="com.cloudlevi.UserPageFragment"
+        android:label="UserPageFragment"
+        tools:layout="@layout/fragment_user_page">
+        <action
+            android:id="@+id/action_userPageFragment_to_marketItemFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:destination="@id/marketItemFragment" />
     </fragment>
 </navigation>

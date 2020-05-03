@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ public class CategoryChoiceFragment extends Fragment {
     private Bundle bundle = new Bundle();
 
     private ListView categoriesList;
+
+    private EditText search_category;
 
     private ArrayAdapter<String> adapter;
 
@@ -53,6 +57,7 @@ public class CategoryChoiceFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_category_choice, container, false);
 
         categoriesList = v.findViewById(R.id.categoriesList);
+        search_category = v.findViewById(R.id.search_category);
 
         ArrayList<String> categories = new ArrayList<>();
         categories.add("Accessories");
@@ -110,6 +115,23 @@ public class CategoryChoiceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
        navController = Navigation.findNavController(view);
+
+        search_category.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         categoriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

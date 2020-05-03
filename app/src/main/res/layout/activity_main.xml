@@ -7,6 +7,13 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
+    <ProgressBar
+        android:id="@+id/activityMainProgress"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="120dp"

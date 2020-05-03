@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/market_item_homepage_layout"
+    android:layout_width="match_parent"
+    android:layout_height="420dp"
+    android:layout_margin="8dp"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/market_item_homepage_image"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="8dp"
+        tools:src="@drawable/nazar" />
+
+    <TextView
+        android:id="@+id/market_item_homepage_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="500$" />
+
+    <TextView
+        android:id="@+id/market_item_homepage_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="15sp"
+        tools:text="Supreme" />
+
+    <TextView
+        android:id="@+id/market_item_homepage_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="15sp"
+        tools:text="Almost New" />
+
+</LinearLayout>

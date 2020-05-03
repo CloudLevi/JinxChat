@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <ProgressBar
+        android:id="@+id/progress_homepage_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:id="@+id/UserPageUserForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/UserPageUserPic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            tools:src="@drawable/nazar" />
+
+        <TextView
+            android:id="@+id/UserPageUsername_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/PlainTextColor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="cloudlevi" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/UserPageUsername_tv"
+            android:layout_centerHorizontal="true"
+            android:text="@string/about_me"
+            android:textColor="@color/PlainTextColor2"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/arrow_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_arrow_right_24dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/space1"
+        android:layout_below="@id/UserPageUserForm"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/BarColor"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/itemCount"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/PlainTextColor"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        tools:text="X items"
+        android:layout_below="@id/space1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/market_item_homepage_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/itemCount" />
+
+
+</RelativeLayout>

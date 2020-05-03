@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     StorageReference storageref;
     String profPicDownloadURL;
 
+    ProgressBar progress;
+
     LinearLayout usernameForm;
 
     @Override
@@ -67,6 +70,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences appSettingPrefs = getSharedPreferences("AppSettingPrefs", 0);
+        Boolean isNightModeOn = appSettingPrefs.getBoolean("NightMode", false);
+
+        if(isNightModeOn){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+
         CardView loginbtn = findViewById(R.id.loginbtn);
         CardView registerbtn = findViewById(R.id.registerbtn);
 
@@ -77,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         usernameForm = findViewById(R.id.usernameForm);
+
+        progress = findViewById(R.id.activityMainProgress);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Fill in the blanks", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    progress.setVisibility(View.VISIBLE);
                     auth.signInWithEmailAndPassword(stringLogin, stringPass)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -99,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else{
+                                        progress.setVisibility(View.INVISIBLE);
                                         Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -128,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (password.length() < 6){
                     Toast.makeText(MainActivity.this, "The password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
                 } else {
+                    progress.setVisibility(View.VISIBLE);
 
                     DatabaseReference userNameReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -146,12 +164,14 @@ public class MainActivity extends AppCompatActivity {
                                         register(stringUsername, stringLogin, stringPass);
                                     }
                                     else{
+                                        progress.setVisibility(View.INVISIBLE);
                                         Toast.makeText(MainActivity.this, "This username is unavailable", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
+                                    progress.setVisibility(View.INVISIBLE);
                                     System.out.println(databaseError.getMessage());
                                 }
                             }
@@ -205,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         } else {
+                            progress.setVisibility(View.INVISIBLE);
                             Toast.makeText(MainActivity.this, "These credentials are unavailable", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -34,4 +34,8 @@
     <string name="theme">Theme:</string>
     <string name="appThemeTV">Light</string>
     <string name="language">Language</string>
+    <string name="click_to_change">Click to change</string>
+    <string name="update_profile_picture">Update profile picture</string>
+    <string name="about_me">About me</string>
+    <string name="search_hint">Search...</string>
 </resources>

@@ -19,7 +19,6 @@
     <string name="condition">Condition</string>
     <string name="price">Price</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="price_title">The price of the item:</string>
     <string name="you_will_receive">You will receive:</string>

@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +35,9 @@ public class MarketItemFragment extends Fragment {
     private TextView mDescriptionTextView;
 
     private DatabaseReference mDataBaseRef;
-    private DatabaseReference mDataBaseRefUser;
+    private String userID;
+
+    private RelativeLayout mUserForm;
 
     public MarketItemFragment() {
         // Required empty public constructor
@@ -54,6 +59,8 @@ public class MarketItemFragment extends Fragment {
         mPriceTextView = v.findViewById(R.id.marketFragmentPrice_tv);
         mDescriptionTextView = v.findViewById(R.id.marketFragmentDescrDetailed_tv);
 
+        mUserForm = v.findViewById(R.id.userForm);
+
         mDataBaseRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
@@ -63,7 +70,17 @@ public class MarketItemFragment extends Fragment {
                     .load(addFragmentModel.getImageURL())
                     .into(mImageView);
 
-            addFragmentModel.getUserIdModel();
+            userID = addFragmentModel.getUserIdModel();
+
+            mUserForm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userID", userID);
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.action_marketItemFragment_to_userPageFragment, bundle);
+                }
+            });
 
             mDataBaseRef.child(addFragmentModel.getUserIdModel()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -85,6 +102,7 @@ public class MarketItemFragment extends Fragment {
             mConditionTextView.setText(addFragmentModel.getConditionModel());
             mPriceTextView.setText(addFragmentModel.getPriceModel());
             mDescriptionTextView.setText(addFragmentModel.getDescriptionModel());
+
         }
 
         return v;

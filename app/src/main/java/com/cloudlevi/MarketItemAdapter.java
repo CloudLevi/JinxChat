@@ -49,6 +49,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Picasso.get()
                         .load(dataSnapshot.child("imageURL").getValue().toString())
+                        .resize(32, 32)
                         .into(holder.userCircleView);
             }
 
@@ -60,7 +61,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
         Picasso.get()
                 .load(itemCurrent.getImageURL())
                 .centerCrop()
-                .placeholder(R.mipmap.ic_round_160_green)
+                .placeholder(R.drawable.progress_animation)
                 .fit()
                 .into(holder.imageView);
         holder.textViewUser.setText(itemCurrent.getUsernameModel());
