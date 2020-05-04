@@ -78,7 +78,7 @@ public class MarketItemFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("userID", userID);
                     NavController navController = Navigation.findNavController(v);
-                    navController.navigate(R.id.action_marketItemFragment_to_userPageFragment, bundle);
+                    navController.navigate(R.id.action_marketItemFragment_to_userPagerAdapterFragment, bundle);
                 }
             });
 

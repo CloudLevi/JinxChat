@@ -67,12 +67,19 @@
             android:defaultValue="None"
             app:argType="string"/>
         <action
-            android:id="@+id/action_profileFragment_to_userPageFragment"
+            android:id="@+id/action_profileFragment_to_userPagerAdapterFragment"
+            app:destination="@id/userPagerAdapterFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:destination="@id/userPageFragment" />
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_profileFragment_to_userAboutMeEditFragment"
+            app:destination="@id/userAboutMeEditFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
     <fragment
@@ -140,8 +147,8 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
         <action
-            android:id="@+id/action_marketItemFragment_to_userPageFragment"
-            app:destination="@id/userPageFragment"
+            android:id="@+id/action_marketItemFragment_to_userPagerAdapterFragment"
+            app:destination="@id/userPagerAdapterFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -159,5 +166,23 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:destination="@id/marketItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPagerAdapterFragment"
+        android:name="com.cloudlevi.UserPagerAdapterFragment"
+        android:label="UserPagerAdapterFragment"
+        tools:layout="@layout/fragment_userpageradapter"/>
+    <fragment
+        android:id="@+id/userAboutMeEditFragment"
+        android:name="com.cloudlevi.UserAboutMeEditFragment"
+        android:label="UserAboutMeEditFragment"
+        tools:layout="@layout/fragment_user_about_me_edit">
+        <action
+            android:id="@+id/action_userAboutMeEditFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

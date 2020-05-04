@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class BrandChoiceFragment extends Fragment {
 
+    public static final String PAGE_TITLE = "Tab2";
     private ListView brandlist;
     private EditText search;
     private ArrayAdapter adapter;

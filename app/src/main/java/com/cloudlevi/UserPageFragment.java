@@ -48,6 +48,10 @@ public class UserPageFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public UserPageFragment(String mUserID) {
+        userID = mUserID;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,12 +71,6 @@ public class UserPageFragment extends Fragment {
 
         mAddFragmentModels = new ArrayList<>();
 
-        if (getArguments() != null) {
-            userID = getArguments().getString("userID");
-        }
-
-
-        System.out.println(userID);
 
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("Users/" + userID + "/UserUploads");
         mDataBaseUserRef = FirebaseDatabase.getInstance().getReference("Users/" + userID);

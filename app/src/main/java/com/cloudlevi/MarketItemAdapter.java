@@ -43,6 +43,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
     @Override
     public void onBindViewHolder(@NonNull final MarketItemViewHolder holder, int position) {
         AddFragmentModel itemCurrent = mUploads.get(position);
+
         DatabaseReference mDataBaseRef = FirebaseDatabase.getInstance().getReference().child("Users/" + itemCurrent.getUserIdModel());
         mDataBaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

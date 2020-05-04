@@ -45,6 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
 
     private RelativeLayout userForm;
+    private RelativeLayout editProfileForm;
 
     private TextView themeChange;
     private TextView userNameTextView;
@@ -80,6 +81,7 @@ public class ProfileFragment extends Fragment {
         uploadpic = v.findViewById(R.id.profilePicBTN);
 
         userForm = v.findViewById(R.id.ProfileFragUserForm);
+        editProfileForm = v.findViewById(R.id.ProfileFrag_Edit_Form);
 
         SharedPreferences appSettingPrefs = this.getActivity().getSharedPreferences("AppSettingPrefs", 0);
         final SharedPreferences.Editor sharedPrefsEdit = appSettingPrefs.edit();
@@ -140,6 +142,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getActivity(), MainActivity.class));
+
             }
         });
 
@@ -149,7 +152,17 @@ public class ProfileFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", firebaseUser.getUid());
                 NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.action_profileFragment_to_userPageFragment, bundle);
+                navController.navigate(R.id.action_profileFragment_to_userPagerAdapterFragment, bundle);
+            }
+        });
+
+        editProfileForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("userID", firebaseUser.getUid());
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_profileFragment_to_userAboutMeEditFragment, bundle);
             }
         });
 

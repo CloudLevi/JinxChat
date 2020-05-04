@@ -38,4 +38,22 @@
     <string name="update_profile_picture">Update profile picture</string>
     <string name="about_me">About me</string>
     <string name="search_hint">Search...</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="bio">Bio</string>
+    <string name="bio_hint">For example, talk about your hobbies, interests, e.g.</string>
+    <string name="gender">Gender:</string>
+    <string name="birthday">Birthday:</string>
+    <string name="change_date">Change date</string>
+    <string name="country">Country:</string>
+    <string name="your_country">Your Country...</string>
+    <string name="city">City:</string>
+    <string name="your_city">Your City...</string>
+    <string name="apply_changes">Apply changes</string>
+
+    <string-array name="genders">
+        <item>Not selected</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

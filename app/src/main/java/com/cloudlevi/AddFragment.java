@@ -342,6 +342,7 @@ public class AddFragment extends Fragment {
                                           fireBaseUserName,
                                           fireBaseUserId);
                                   String uploadId = mDataBaseRef.push().getKey();
+
                                   mDataBaseRef.child(uploadId).setValue(upload);
                                   mDataBaseRefUser.child(uploadId).setValue(upload);
                               }

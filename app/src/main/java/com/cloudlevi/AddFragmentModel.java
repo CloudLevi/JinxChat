@@ -28,7 +28,6 @@ public class AddFragmentModel implements Parcelable {
     private String userIdModel;
 
     public AddFragmentModel(){
-
     }
 
     public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel, String muserIdModel){

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <ScrollView
+        android:id="@+id/add_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:id="@+id/space1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/BarColor"
+                android:orientation="horizontal" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/space1"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/space2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/userInfo_bio_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/bio"
+                    android:textColor="@color/PlainTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/userInfo_bio_ed"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/bio_hint"
+                    android:inputType="textMultiLine"
+                    android:maxLines="5"
+                    android:minLines="3"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/PlainTextColor" />
+
+                <LinearLayout
+                    android:id="@+id/space3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/userInfo_gender_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/gender_TV"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/gender"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/gender_choice"
+                        android:entries="@array/genders"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/gender_TV"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/space4"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/userInfo_bday_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/bday_TV"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/birthday"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/userInfo_bday_tv"
+                        tools:text="16.05.2002"
+                        android:layout_toEndOf="@id/bday_TV"
+                        android:layout_marginStart="32dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="16sp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/birthdayBTN"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="125dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardCornerRadius="15dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="@string/change_date"
+                                android:textColor="@color/White"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/space5"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/country_choice"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/country_tv"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/country"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/country_choice_ed"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@id/country_tv"
+                        android:layout_width="150dp"
+                        android:hint="@string/your_country"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/space6"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/price_choice"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/city_tv"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/city"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/city_choice_ed"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@id/city_tv"
+                        android:layout_width="150dp"
+                        android:hint="@string/your_city"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/space7"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:progressBackgroundTint="@color/TitleTextColor" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/applyChangesBTN"
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="25dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/apply_changes"
+                            android:textColor="@color/White"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </ScrollView>
+</RelativeLayout>

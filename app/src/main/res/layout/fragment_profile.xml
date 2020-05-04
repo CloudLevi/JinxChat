@@ -187,6 +187,41 @@
                 android:background="@color/BarColor"
                 android:orientation="horizontal" />
 
+            <RelativeLayout
+                android:id="@+id/ProfileFrag_Edit_Form"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/edit_profile"
+                    android:textColor="@color/PlainTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/arrow_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_arrow_right_24dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/space6"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/BarColor"
+                android:orientation="horizontal" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/profilePicBTN"
                 android:layout_width="280dp"
@@ -224,7 +259,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/space6"
+                android:id="@+id/space7"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/BarColor"
@@ -273,7 +308,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/space7"
+                android:id="@+id/space8"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/BarColor"
@@ -321,7 +356,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/space8"
+                android:id="@+id/space9"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/BarColor"
