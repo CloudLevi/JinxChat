@@ -26,7 +26,7 @@
     <string name="confirm_the_price">Confirm the price</string>
     <string name="show_my_profile">Show my profile</string>
     <string name="account_settings">Account settings</string>
-    <string name="email">E-mail:</string>
+    <string name="email" translatable="false">E-mail:</string>
     <string name="change">Change</string>
     <string name="password">Password:</string>
     <string name="app_settings">App settings</string>

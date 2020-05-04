@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class ConditionChoiceFragment extends Fragment {
@@ -37,9 +38,8 @@ public class ConditionChoiceFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_condition_choice, container, false);
 
-        conditionList = v.findViewById(R.id.conditionList);
-
         ArrayList<String> conditions = new ArrayList<>();
+
         conditions.add("New with tags");
         conditions.add("New without tags");
         conditions.add("Almost new");

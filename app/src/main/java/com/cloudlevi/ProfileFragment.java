@@ -3,10 +3,13 @@ package com.cloudlevi;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
+
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,13 +120,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(isNightModeOn){
-                    System.out.println("Night Mode is on");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     sharedPrefsEdit.putBoolean("NightMode", false);
                     sharedPrefsEdit.apply();
                 }
                 else {
-                    System.out.println("Night Mode is off");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     sharedPrefsEdit.putBoolean("NightMode", true);
                     sharedPrefsEdit.apply();

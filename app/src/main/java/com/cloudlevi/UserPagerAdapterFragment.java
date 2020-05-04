@@ -65,7 +65,7 @@ public class UserPagerAdapterFragment extends Fragment {
                 return new UserPageFragment(userID);
             }
             else {
-                return new UserAboutMeFragment();
+                return new UserAboutMeFragment(userID);
             }
         }
 

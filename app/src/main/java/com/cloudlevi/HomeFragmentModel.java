@@ -4,6 +4,7 @@ public class HomeFragmentModel {
 
     private String title;
     private String description;
+    private int scrollPositionY;
 
     public String getTitle() {
         return title;
@@ -19,5 +20,13 @@ public class HomeFragmentModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getScrollPositionY() {
+        return scrollPositionY;
+    }
+
+    public void setScrollPositionY(int scrollPositionY) {
+        this.scrollPositionY = scrollPositionY;
     }
 }

@@ -179,7 +179,7 @@
 
                     <TextView
                         android:id="@+id/country_tv"
-                        android:layout_width="88dp"
+                        android:layout_width="98dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
@@ -215,7 +215,7 @@
 
                     <TextView
                         android:id="@+id/city_tv"
-                        android:layout_width="88dp"
+                        android:layout_width="98dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"

@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,11 +53,11 @@ public class MarketItemHomePageAdapter extends RecyclerView.Adapter<MarketItemHo
         holder.textViewBrand.setText(itemCurrent.getBrandModel());
         holder.textViewCondition.setText(itemCurrent.getConditionModel());
 
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putParcelable("item", itemCurrent);
 
         holder.marketItemLayout.setOnClickListener(Navigation
-                .createNavigateOnClickListener(R.id.action_userPageFragment_to_marketItemFragment, bundle));
+                .createNavigateOnClickListener(R.id.action_userPagerAdapterFragment_to_marketItemFragment, bundle));
     }
 
     @Override

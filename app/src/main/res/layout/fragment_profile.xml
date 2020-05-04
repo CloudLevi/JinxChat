@@ -313,54 +313,6 @@
                 android:layout_height="2dp"
                 android:background="@color/BarColor"
                 android:orientation="horizontal" />
-            <RelativeLayout
-                android:id="@+id/ProfileFrag_Lang_Form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/language"
-                    android:textColor="@color/PlainTextColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/ProfileFragLang_tv"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textColor="@color/PlainTextColor"
-                    android:textSize="15sp"
-                    android:text="English"/>
-
-                <ImageView
-                    android:id="@+id/arrow_lang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_arrow_right_24dp" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/space9"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/BarColor"
-                android:orientation="horizontal" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/logoutbtn"

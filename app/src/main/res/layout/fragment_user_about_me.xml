@@ -1,14 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserAboutMeFragment">
+    android:background="@color/colorPrimaryDark">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+<LinearLayout
+    android:id="@+id/market_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/user_AboutMe_Image"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        tools:src="@drawable/nazar" />
+
+    <TextView
+        android:id="@+id/user_AboutMe_UserName"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="cloudlevi" />
+
+    <TextView
+        android:id="@+id/user_AboutMe_Gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="15sp"
+        android:text="@string/gender" />
+
+    <TextView
+        android:id="@+id/user_AboutMe_BirthDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="15sp"
+        android:text="@string/birthday" />
+    <TextView
+        android:id="@+id/user_AboutMe_Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="15sp"
+        android:text="@string/location" />
+
+    <LinearLayout
+        android:id="@+id/space1"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/BarColor"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/user_AboutMe_Bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_margin="16dp"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="17sp"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+</LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

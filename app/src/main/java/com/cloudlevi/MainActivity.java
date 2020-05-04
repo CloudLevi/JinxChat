@@ -208,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
                                     hashMap.put("username", stringUsername);
                                     profPicDownloadURL = uri.toString();
                                     hashMap.put("imageURL", profPicDownloadURL);
-                                    System.out.println(profPicDownloadURL + "INCLASS-------------");
 
                                     databasereference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

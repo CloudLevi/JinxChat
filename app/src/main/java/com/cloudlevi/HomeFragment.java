@@ -43,6 +43,9 @@ public class HomeFragment extends Fragment {
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     private String fireBaseUserId;
+
+    private int mScrollPositionY;
+    private HomeFragmentViewModel viewModel;
     
 
     @Override
@@ -68,6 +71,18 @@ public class HomeFragment extends Fragment {
 
         fireBaseUserId = firebaseUser.getUid();
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
+
+        if(viewModel.getData().getValue() != null){
+            final HomeFragmentModel homeFragmentModel = viewModel.getData().getValue();
+
+            mRecyclerView.postDelayed(new Runnable() {
+                @Override public void run()
+                { mRecyclerView.smoothScrollToPosition(homeFragmentModel.getScrollPositionY());
+                } }, 150);
+
+        }
 
         mDataBaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -100,6 +115,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        mScrollPositionY = mRecyclerView.computeVerticalScrollOffset();
+        HomeFragmentModel homeFragmentModel = new HomeFragmentModel();
+        homeFragmentModel.setScrollPositionY(mScrollPositionY);
+
+        viewModel.setData(homeFragmentModel);
+
     }
 
 }
