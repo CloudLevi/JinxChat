@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     private String fireBaseUserId;
 
-    private int mScrollPositionY;
     private HomeFragmentViewModel viewModel;
     
 
@@ -74,17 +73,7 @@ public class HomeFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(HomeFragmentViewModel.class);
 
-        if(viewModel.getData().getValue() != null){
-            final HomeFragmentModel homeFragmentModel = viewModel.getData().getValue();
-
-            mRecyclerView.postDelayed(new Runnable() {
-                @Override public void run()
-                { mRecyclerView.smoothScrollToPosition(homeFragmentModel.getScrollPositionY());
-                } }, 150);
-
-        }
-
-        mDataBaseRef.addValueEventListener(new ValueEventListener() {
+        mDataBaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
@@ -92,7 +81,7 @@ public class HomeFragment extends Fragment {
                     mAddFragmentModels.add(upload);
                 }
 
-                mAdapter = new MarketItemAdapter(getContext(), mAddFragmentModels);
+                mAdapter = new MarketItemAdapter(getContext(), mAddFragmentModels, "HomeFragment");
 
                 mRecyclerView.setAdapter(mAdapter);
                 mProgressCircle.setVisibility(View.INVISIBLE);
@@ -115,12 +104,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        mScrollPositionY = mRecyclerView.computeVerticalScrollOffset();
-        HomeFragmentModel homeFragmentModel = new HomeFragmentModel();
-        homeFragmentModel.setScrollPositionY(mScrollPositionY);
-
-        viewModel.setData(homeFragmentModel);
 
     }
 

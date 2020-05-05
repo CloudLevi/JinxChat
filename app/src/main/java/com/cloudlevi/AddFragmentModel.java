@@ -18,6 +18,8 @@ public class AddFragmentModel implements Parcelable {
     private String conditionModel;
     private String priceModel;
 
+    private String uploadIDModel;
+
     private String imageURL;
     private Uri imageUri;
 
@@ -30,7 +32,7 @@ public class AddFragmentModel implements Parcelable {
     public AddFragmentModel(){
     }
 
-    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel, String muserIdModel){
+    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel, String muserIdModel, String muploadIDModel){
 
         titleModel = mtitleModel;
         imageURL = mimageURL;
@@ -41,6 +43,7 @@ public class AddFragmentModel implements Parcelable {
         priceModel = mpriceModel;
         usernameModel = musernameModel;
         userIdModel = muserIdModel;
+        uploadIDModel = muploadIDModel;
 
     }
 
@@ -57,6 +60,7 @@ public class AddFragmentModel implements Parcelable {
         scrollPositionY = in.readInt();
         usernameModel = in.readString();
         userIdModel = in.readString();
+        uploadIDModel = in.readString();
     }
 
     public static final Creator<AddFragmentModel> CREATOR = new Creator<AddFragmentModel>() {
@@ -169,6 +173,14 @@ public class AddFragmentModel implements Parcelable {
         this.userIdModel = userIdModel;
     }
 
+    public String getUploadIDModel() {
+        return uploadIDModel;
+    }
+
+    public void setUploadIDModel(String uploadIDModel) {
+        this.uploadIDModel = uploadIDModel;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -187,5 +199,6 @@ public class AddFragmentModel implements Parcelable {
         dest.writeInt(scrollPositionY);
         dest.writeString(usernameModel);
         dest.writeString(userIdModel);
+        dest.writeString(uploadIDModel);
     }
 }

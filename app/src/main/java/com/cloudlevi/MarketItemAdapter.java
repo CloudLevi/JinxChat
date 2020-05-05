@@ -24,13 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.MarketItemViewHolder> {
-    private String userPicURL;
     private Context mContext;
+    private String mCallingFragment;
     private List<AddFragmentModel> mUploads;
 
-    public MarketItemAdapter(Context context, List<AddFragmentModel> uploads){
+    public MarketItemAdapter(Context context, List<AddFragmentModel> uploads, String callingFragment){
         mContext = context;
         mUploads = uploads;
+        mCallingFragment = callingFragment;
     }
 
     @NonNull
@@ -73,8 +74,13 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
         Bundle bundle = new Bundle();
         bundle.putParcelable("item", itemCurrent);
 
-        holder.marketItemLayout.setOnClickListener(Navigation
-                .createNavigateOnClickListener(R.id.action_homeFragment_to_marketItemFragment, bundle));
+        if(mCallingFragment.equals("HomeFragment")){
+            holder.marketItemLayout.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_marketItemFragment, bundle));
+        } else{
+            if(mCallingFragment.equals("FavoritesFragment")){
+                holder.marketItemLayout.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_favoritesFragment_to_marketItemFragment, bundle));
+            }
+        }
     }
 
     @Override

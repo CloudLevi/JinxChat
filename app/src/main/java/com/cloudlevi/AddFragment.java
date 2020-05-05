@@ -329,6 +329,7 @@ public class AddFragment extends Fragment {
                           }, 500);
 
                           Toast.makeText(getContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                          final String uploadID = mDataBaseRef.push().getKey();
                           fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                               @Override
                               public void onSuccess(Uri uri) {
@@ -340,11 +341,12 @@ public class AddFragment extends Fragment {
                                           condition_choiceTV.getText().toString().trim(),
                                           price_choiceTV.getText().toString().trim(),
                                           fireBaseUserName,
-                                          fireBaseUserId);
-                                  String uploadId = mDataBaseRef.push().getKey();
+                                          fireBaseUserId,
+                                          uploadID);
 
-                                  mDataBaseRef.child(uploadId).setValue(upload);
-                                  mDataBaseRefUser.child(uploadId).setValue(upload);
+
+                                  mDataBaseRef.child(uploadID).setValue(upload);
+                                  mDataBaseRefUser.child(uploadID).child("uploadID").setValue(uploadID);
                               }
                           });
                       }

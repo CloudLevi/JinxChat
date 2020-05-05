@@ -4,12 +4,28 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/progress_circle_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Favorites Fragment"
+        android:layout_centerInParent="true"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/market_item_favorites_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/emptyTV"
+        android:visibility="gone"
         android:textColor="@color/PlainTextColor"
-        android:textSize="35sp" />
+        android:text="@string/empty"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
 </RelativeLayout>

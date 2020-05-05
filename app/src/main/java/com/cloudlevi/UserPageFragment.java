@@ -30,6 +30,7 @@ public class UserPageFragment extends Fragment {
 
     private MarketItemHomePageAdapter mAdapter;
 
+    private DatabaseReference mDataBaseUploadsRef;
     private DatabaseReference mDataBaseRef;
     private DatabaseReference mDataBaseUserRef;
 
@@ -72,8 +73,9 @@ public class UserPageFragment extends Fragment {
         mAddFragmentModels = new ArrayList<>();
 
 
-        mDataBaseRef = FirebaseDatabase.getInstance().getReference("Users/" + userID + "/UserUploads");
+        mDataBaseUploadsRef = FirebaseDatabase.getInstance().getReference("Users/" + userID + "/UserUploads");
         mDataBaseUserRef = FirebaseDatabase.getInstance().getReference("Users/" + userID);
+        mDataBaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         mDataBaseUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -90,20 +92,38 @@ public class UserPageFragment extends Fragment {
             }
         });
 
-        mDataBaseRef.addValueEventListener(new ValueEventListener() {
+
+        mDataBaseUploadsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    AddFragmentModel upload = postSnapshot.getValue(AddFragmentModel.class);
-                    mAddFragmentModels.add(upload);
+                for (final DataSnapshot postSnapshotMain : dataSnapshot.getChildren()){
+                    final String mUserUploadID = postSnapshotMain.child("uploadID").getValue().toString();
+
+                    mDataBaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                                if(postSnapshot.child("uploadIDModel").getValue() != null && postSnapshot.child("uploadIDModel").getValue().toString().equals(mUserUploadID)){
+
+                                    AddFragmentModel upload = postSnapshot.getValue(AddFragmentModel.class);
+                                    mAddFragmentModels.add(upload);
+
+                                    itemCount.setText(mAddFragmentModels.size() + " items");
+
+                                    mAdapter = new MarketItemHomePageAdapter(getContext(), mAddFragmentModels);
+                                    mRecyclerView.setAdapter(mAdapter);
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+
+                    });
                 }
-
-                itemCount.setText(mAddFragmentModels.size() + " items");
-                mAdapter = new MarketItemHomePageAdapter(getContext(), mAddFragmentModels);
-
-
-                mRecyclerView.setAdapter(mAdapter);
-                mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -111,6 +131,10 @@ public class UserPageFragment extends Fragment {
 
             }
         });
+
+        mProgressCircle.setVisibility(View.INVISIBLE);
+
+
 
 
 

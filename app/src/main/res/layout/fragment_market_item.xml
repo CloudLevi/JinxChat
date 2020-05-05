@@ -91,6 +91,43 @@
                     android:background="@color/BarColor"
                     android:orientation="horizontal" />
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/addToFavoritesBtn"
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="25dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/favorites_image"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/add_to_fav"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"/>
+
+                        <TextView
+                            android:id="@+id/favorites_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/add_to_favorites"
+                            android:textColor="@color/White"
+                            android:textSize="18sp" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
                 <RelativeLayout
                     android:id="@+id/mainInfoForm"
                     android:layout_marginTop="8dp"
