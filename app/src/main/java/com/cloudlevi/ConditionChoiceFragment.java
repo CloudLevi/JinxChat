@@ -29,6 +29,7 @@ public class ConditionChoiceFragment extends Fragment {
     private ListView conditionList;
     private ArrayAdapter<String> adapter;
     private NavController navController;
+    private String initFragment;
 
 
     @Override
@@ -37,6 +38,10 @@ public class ConditionChoiceFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_condition_choice, container, false);
+
+        if (getArguments() != null) {
+            initFragment = getArguments().getString("Initial_Fragment");
+        }
 
         conditionList = v.findViewById(R.id.conditionList);
 
@@ -61,7 +66,13 @@ public class ConditionChoiceFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("condition_choiceArgument", adapter.getItem(position));
 
-                navController.navigate(R.id.action_conditionChoiceFragment_to_addFragment, bundle);
+                switch (initFragment){
+                    case "Add_Fragment":
+                        navController.navigate(R.id.action_conditionChoiceFragment_to_addFragment, bundle);
+                        break;
+                    case "Edit_Fragment":
+                        navController.navigate(R.id.action_conditionChoiceFragment_to_marketItemEditFragment, bundle);
+                }
 
 
             }

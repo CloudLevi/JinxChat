@@ -35,6 +35,7 @@ public class CategoryChoiceFragment extends Fragment {
     private EditText search_category;
 
     private ArrayAdapter<String> adapter;
+    private String initFragment;
 
 
 
@@ -58,6 +59,10 @@ public class CategoryChoiceFragment extends Fragment {
 
         categoriesList = v.findViewById(R.id.categoriesList);
         search_category = v.findViewById(R.id.search_category);
+
+        if (getArguments() != null) {
+            initFragment = getArguments().getString("Initial_Fragment");
+        }
 
         ArrayList<String> categories = new ArrayList<>();
         categories.add("Accessories");
@@ -140,9 +145,13 @@ public class CategoryChoiceFragment extends Fragment {
                 navController = Navigation.findNavController(view);
                 bundle.putString("category_choiceArgument", adapter.getItem(position));
 
-                navController.navigate(R.id.action_categoryChoiceFragment_to_addFragment, bundle);
-
-
+                switch (initFragment){
+                    case "Add_Fragment":
+                        navController.navigate(R.id.action_categoryChoiceFragment_to_addFragment, bundle);
+                        break;
+                    case "Edit_Fragment":
+                        navController.navigate(R.id.action_categoryChoiceFragment_to_marketItemEditFragment, bundle);
+                }
             }
         });
     }

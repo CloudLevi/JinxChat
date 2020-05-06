@@ -102,6 +102,13 @@
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_categoryChoiceFragment_to_marketItemEditFragment"
+            app:destination="@id/marketItemEditFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/brandChoiceFragment"
@@ -111,6 +118,13 @@
         <action
             android:id="@+id/action_brandChoiceFragment_to_addFragment"
             app:destination="@id/addFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_brandChoiceFragment_to_marketItemEditFragment"
+            app:destination="@id/marketItemEditFragment"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
@@ -128,6 +142,13 @@
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_conditionChoiceFragment_to_marketItemEditFragment"
+            app:destination="@id/marketItemEditFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/priceChoiceFragment"
@@ -137,6 +158,13 @@
         <action
             android:id="@+id/action_priceChoiceFragment_to_addFragment"
             app:destination="@id/addFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_priceChoiceFragment_to_marketItemEditFragment"
+            app:destination="@id/marketItemEditFragment"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
@@ -157,6 +185,13 @@
         <action
             android:id="@+id/action_marketItemFragment_to_userPagerAdapterFragment"
             app:destination="@id/userPagerAdapterFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_marketItemFragment_to_marketItemEditFragment"
+            app:destination="@id/marketItemEditFragment"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
@@ -187,5 +222,46 @@
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/marketItemEditFragment"
+        android:name="com.cloudlevi.MarketItemEditFragment"
+        android:label="MarketItemEditFragment"
+        tools:layout="@layout/fragment_market_item_edit">
+        <action
+            android:id="@+id/action_marketItemEditFragment_to_marketItemFragment"
+            app:destination="@id/marketItemFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_marketItemEditFragment_to_categoryChoiceFragment"
+            app:destination="@id/categoryChoiceFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_marketItemEditFragment_to_brandChoiceFragment"
+            app:destination="@id/brandChoiceFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_marketItemEditFragment_to_conditionChoiceFragment"
+            app:destination="@id/conditionChoiceFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_marketItemEditFragment_to_priceChoiceFragment"
+            app:destination="@id/priceChoiceFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 </navigation>

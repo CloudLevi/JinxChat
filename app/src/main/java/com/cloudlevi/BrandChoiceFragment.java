@@ -27,6 +27,8 @@ public class BrandChoiceFragment extends Fragment {
     private ArrayAdapter adapter;
     private NavController navController;
 
+    private String initFragment;
+
     public BrandChoiceFragment() {
         // Required empty public constructor
     }
@@ -37,6 +39,10 @@ public class BrandChoiceFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_brand_choice, container, false);
+
+        if (getArguments() != null) {
+            initFragment = getArguments().getString("Initial_Fragment");
+        }
 
         brandlist = v.findViewById(R.id.brandlist);
         search = v.findViewById(R.id.search_brand);
@@ -91,7 +97,14 @@ public class BrandChoiceFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("brand_choiceArgument", adapter.getItem(position).toString());
 
-                navController.navigate(R.id.action_brandChoiceFragment_to_addFragment, bundle);
+                switch (initFragment){
+                    case "Add_Fragment":
+                        navController.navigate(R.id.action_brandChoiceFragment_to_addFragment, bundle);
+                        break;
+                    case "Edit_Fragment":
+                        navController.navigate(R.id.action_brandChoiceFragment_to_marketItemEditFragment, bundle);
+                }
+
 
 
             }

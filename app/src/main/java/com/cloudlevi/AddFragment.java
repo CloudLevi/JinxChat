@@ -90,10 +90,13 @@ public class AddFragment extends Fragment {
     private String fireBaseUserName;
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_add, container, false);
+
+        bundle.putString("Initial_Fragment", "Add_Fragment");
 
         mButtonChooseFile = v.findViewById(R.id.choosebtn);
         mButtonUpload = v.findViewById(R.id.uploadbtn);
@@ -241,7 +244,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(TextUtils.isEmpty(category_choiceTV.getText().toString())) {
-                    navController.navigate(R.id.action_addFragment_to_categoryChoiceFragment);
+                    navController.navigate(R.id.action_addFragment_to_categoryChoiceFragment, bundle);
                 }
                 else{
                     bundle.putString("category_choiceArgument", category_choiceTV.getText().toString());
@@ -254,14 +257,14 @@ public class AddFragment extends Fragment {
         brand_choiceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_addFragment_to_brandChoiceFragment);
+                navController.navigate(R.id.action_addFragment_to_brandChoiceFragment, bundle);
             }
         });
 
         condition_choiceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_addFragment_to_conditionChoiceFragment);
+                navController.navigate(R.id.action_addFragment_to_conditionChoiceFragment, bundle);
             }
         });
 
@@ -269,7 +272,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(TextUtils.isEmpty(price_choiceTV.getText().toString())) {
-                    navController.navigate(R.id.action_addFragment_to_priceChoiceFragment);
+                    navController.navigate(R.id.action_addFragment_to_priceChoiceFragment, bundle);
                 }
                 else{
                     bundle.putString("price_choiceArgument", removeOneCharacter(price_choiceTV.getText().toString()));

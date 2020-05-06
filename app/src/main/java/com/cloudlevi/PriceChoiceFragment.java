@@ -27,6 +27,8 @@ public class PriceChoiceFragment extends Fragment {
     private TextView price_calcTV;
     private CardView confirmBTN;
 
+    private String initFragment;
+
     private Bundle bundle = new Bundle();
 
     public PriceChoiceFragment() {
@@ -49,6 +51,7 @@ public class PriceChoiceFragment extends Fragment {
 
             String price_choiceArgument;
             price_choiceArgument = getArguments().getString("price_choiceArgument");
+            initFragment = getArguments().getString("Initial_Fragment");
             price_editText.setText(price_choiceArgument);
             calculatePrice();
         }
@@ -86,8 +89,14 @@ public class PriceChoiceFragment extends Fragment {
                 String priceText = price_editText.getText().toString();
 
                 bundle.putString("price_choiceArgument", priceText);
-                navController.navigate(R.id.action_priceChoiceFragment_to_addFragment,
-                        bundle);
+
+                switch (initFragment){
+                    case "Add_Fragment":
+                        navController.navigate(R.id.action_priceChoiceFragment_to_addFragment, bundle);
+                        break;
+                    case "Edit_Fragment":
+                        navController.navigate(R.id.action_priceChoiceFragment_to_marketItemEditFragment, bundle);
+                }
             }
         });
 

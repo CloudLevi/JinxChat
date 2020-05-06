@@ -45,10 +45,11 @@ public class MarketItemFragment extends Fragment {
     private ImageView mFavoritesImageView;
 
     private CardView mFavoritesButton;
+    private CardView mEditButton;
 
     private DatabaseReference mDataBaseRef;
     private DatabaseReference mFavoritesDataBaseRef;
-    private String userID;
+    private String itemUserID;
     private String currentUserID;
 
     private RelativeLayout mUserForm;
@@ -80,6 +81,7 @@ public class MarketItemFragment extends Fragment {
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mFavoritesButton = v.findViewById(R.id.addToFavoritesBtn);
+        mEditButton = v.findViewById(R.id.editBTN);
 
         mUserForm = v.findViewById(R.id.userForm);
 
@@ -93,7 +95,11 @@ public class MarketItemFragment extends Fragment {
                     .load(addFragmentModel.getImageURL())
                     .into(mImageView);
 
-            userID = addFragmentModel.getUserIdModel();
+            itemUserID = addFragmentModel.getUserIdModel();
+
+            if(itemUserID.equals(currentUserID)){
+                mEditButton.setVisibility(View.VISIBLE);
+            }
 
             mDataBaseRef.child(addFragmentModel.getUserIdModel()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -165,11 +171,24 @@ public class MarketItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("userID", userID);
+                bundle.putString("userID", itemUserID);
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.action_marketItemFragment_to_userPagerAdapterFragment, bundle);
             }
         });
+
+        if(mEditButton.getVisibility() == View.VISIBLE){
+            mEditButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavController navController = Navigation.findNavController(v);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("item", addFragmentModel);
+                    navController.navigate(R.id.action_marketItemFragment_to_marketItemEditFragment, bundle);
+                }
+            });
+
+        }
     }
 
     private void setFavoritesButtonRemoval(){
