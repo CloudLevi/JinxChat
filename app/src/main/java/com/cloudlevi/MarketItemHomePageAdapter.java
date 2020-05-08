@@ -51,6 +51,7 @@ public class MarketItemHomePageAdapter extends RecyclerView.Adapter<MarketItemHo
                 .into(holder.imageView);
         holder.textViewPrice.setText(itemCurrent.getPriceModel());
         holder.textViewBrand.setText(itemCurrent.getBrandModel());
+        holder.textViewSize.setText(itemCurrent.getSizeModel());
         holder.textViewCondition.setText(itemCurrent.getConditionModel());
 
         final Bundle bundle = new Bundle();
@@ -69,15 +70,17 @@ public class MarketItemHomePageAdapter extends RecyclerView.Adapter<MarketItemHo
         public ImageView imageView;
         public TextView textViewPrice;
         public TextView textViewBrand;
+        public TextView textViewSize;
         public TextView textViewCondition;
         public LinearLayout marketItemLayout;
 
-        public MarketItemHomePageViewHolder(@NonNull View itemView) {
+        private MarketItemHomePageViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.market_item_homepage_image);
             textViewPrice = itemView.findViewById(R.id.market_item_homepage_price);
             textViewBrand = itemView.findViewById(R.id.market_item_homepage_brand);
+            textViewSize = itemView.findViewById(R.id.market_item_homepage_size);
             textViewCondition = itemView.findViewById(R.id.market_item_homepage_condition);
             marketItemLayout = itemView.findViewById(R.id.market_item_homepage_layout);
 

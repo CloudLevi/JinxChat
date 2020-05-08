@@ -59,6 +59,7 @@ public class MarketItemEditFragment extends Fragment {
 
     private RelativeLayout cat_choiceLayout;
     private RelativeLayout brand_choiceLayout;
+    private RelativeLayout size_choiceLayout;
     private RelativeLayout condition_choiceLayout;
     private RelativeLayout price_choiceLayout;
 
@@ -68,6 +69,7 @@ public class MarketItemEditFragment extends Fragment {
 
     private TextView category_choiceTV;
     private TextView brand_choiceTV;
+    private TextView size_choiceTV;
     private TextView condition_choiceTV;
     private TextView price_choiceTV;
 
@@ -112,11 +114,13 @@ public class MarketItemEditFragment extends Fragment {
 
         cat_choiceLayout = v.findViewById(R.id.market_edit_category_choice);
         brand_choiceLayout = v.findViewById(R.id.market_edit_brand_choice);
+        size_choiceLayout = v.findViewById(R.id.size_choice);
         condition_choiceLayout = v.findViewById(R.id.market_edit_condition_choice);
         price_choiceLayout = v.findViewById(R.id.market_edit_price_choice);
 
         category_choiceTV = v.findViewById(R.id.market_edit_category_choiceTV);
         brand_choiceTV = v.findViewById(R.id.market_edit_brand_choiceTV);
+        size_choiceTV = v.findViewById(R.id.size_choiceTV);
         condition_choiceTV = v.findViewById(R.id.market_edit_condition_choiceTV);
         price_choiceTV = v.findViewById(R.id.market_edit_price_choiceTV);
 
@@ -159,6 +163,7 @@ public class MarketItemEditFragment extends Fragment {
 
             category_choiceTV.setText(initialFragmentModel.getCategoryModel());
             brand_choiceTV.setText(initialFragmentModel.getBrandModel());
+            size_choiceTV.setText(initialFragmentModel.getSizeModel());
             condition_choiceTV.setText(initialFragmentModel.getConditionModel());
             price_choiceTV.setText(initialFragmentModel.getPriceModel());
         }
@@ -197,6 +202,11 @@ public class MarketItemEditFragment extends Fragment {
                     } else {
                         brand_choiceTV.setText(editFragmentModel.getBrandModel());
                     }
+                    if (getArguments().getString("size_choiceArgument") != null) {
+                        size_choiceTV.setText(getArguments().getString("size_choiceArgument"));
+                    } else {
+                        size_choiceTV.setText(editFragmentModel.getSizeModel());
+                    }
                     if (getArguments().getString("condition_choiceArgument") != null) {
                         condition_choiceTV.setText(getArguments().getString("condition_choiceArgument"));
                     } else {
@@ -210,6 +220,7 @@ public class MarketItemEditFragment extends Fragment {
                 } else {
                     category_choiceTV.setText(editFragmentModel.getCategoryModel());
                     brand_choiceTV.setText(editFragmentModel.getBrandModel());
+                    size_choiceTV.setText(editFragmentModel.getSizeModel());
                     condition_choiceTV.setText(editFragmentModel.getConditionModel());
                     price_choiceTV.setText(addDollarSign(editFragmentModel.getPriceModel()));
                 }
@@ -226,6 +237,12 @@ public class MarketItemEditFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_marketItemEditFragment_to_brandChoiceFragment, bundle);
+            }
+        });
+        size_choiceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_marketItemEditFragment_to_sizeChoiceFragment, bundle);
             }
         });
         condition_choiceLayout.setOnClickListener(new View.OnClickListener() {
@@ -259,13 +276,12 @@ public class MarketItemEditFragment extends Fragment {
                                     mEditTextDescription.getText().toString().equals("") ||
                                     category_choiceTV.getText().toString().equals("") ||
                                     brand_choiceTV.getText().toString().equals("") ||
+                                    size_choiceTV.getText().toString().equals("") ||
                                     condition_choiceTV.getText().toString().equals("") ||
                                     price_choiceTV.getText().toString().equals("")){
                         Toast.makeText(getContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
                     } else{
                         mProgressBar.setVisibility(View.VISIBLE);
-                        StorageReference mPhotoRef = mFireBaseStorage.getReferenceFromUrl(mOldDownloadURL);
-                        mPhotoRef.delete();
                         uploadFile();
                     }}
 
@@ -294,6 +310,10 @@ public class MarketItemEditFragment extends Fragment {
         if(brand_choiceTV.getText().equals("")){
             editFragmentModel.setBrandModel("");
         }else{editFragmentModel.setBrandModel(brand_choiceTV.getText().toString());}
+
+        if(size_choiceTV.getText().equals("")){
+            editFragmentModel.setSizeModel("");
+        }else{editFragmentModel.setSizeModel(size_choiceTV.getText().toString());}
 
         if(condition_choiceTV.getText().equals("")){
             editFragmentModel.setConditionModel("");
@@ -374,11 +394,14 @@ public class MarketItemEditFragment extends Fragment {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
+                                    StorageReference mPhotoRef = mFireBaseStorage.getReferenceFromUrl(mOldDownloadURL);
+                                    mPhotoRef.delete();
                                     uploadObject = new AddFragmentModel(mEditTextTitle.getText().toString().trim(),
                                             uri.toString(),
                                             mEditTextDescription.getText().toString().trim(),
                                             category_choiceTV.getText().toString().trim(),
                                             brand_choiceTV.getText().toString().trim(),
+                                            size_choiceTV.getText().toString().trim(),
                                             condition_choiceTV.getText().toString().trim(),
                                             price_choiceTV.getText().toString().trim(),
                                             fireBaseUserName,
@@ -402,7 +425,22 @@ public class MarketItemEditFragment extends Fragment {
                     });
         }
         else{
-            Toast.makeText(getContext(), "No File Selected", Toast.LENGTH_SHORT).show();
+            uploadObject = new AddFragmentModel(mEditTextTitle.getText().toString().trim(),
+                    mOldDownloadURL,
+                    mEditTextDescription.getText().toString().trim(),
+                    category_choiceTV.getText().toString().trim(),
+                    brand_choiceTV.getText().toString().trim(),
+                    size_choiceTV.getText().toString().trim(),
+                    condition_choiceTV.getText().toString().trim(),
+                    price_choiceTV.getText().toString().trim(),
+                    fireBaseUserName,
+                    fireBaseUserId,
+                    uploadID);
+            mDataBaseReference.setValue(uploadObject);
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("item", uploadObject);
+            navController.navigate(R.id.action_marketItemEditFragment_to_marketItemFragment, bundle);
         }
 
     }

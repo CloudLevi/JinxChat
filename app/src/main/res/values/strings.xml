@@ -54,6 +54,7 @@
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="empty">Empty :(</string>
     <string name="edit">Edit</string>
+    <string name="size">Size</string>
 
     <string-array name="genders">
         <item>Not selected</item>

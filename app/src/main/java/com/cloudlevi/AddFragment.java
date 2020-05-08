@@ -68,6 +68,7 @@ public class AddFragment extends Fragment {
 
     private RelativeLayout cat_choiceLayout;
     private RelativeLayout brand_choiceLayout;
+    private RelativeLayout size_choiceLayout;
     private RelativeLayout condition_choiceLayout;
     private RelativeLayout price_choiceLayout;
 
@@ -77,6 +78,7 @@ public class AddFragment extends Fragment {
 
     private TextView category_choiceTV;
     private TextView brand_choiceTV;
+    private TextView size_choiceTV;
     private TextView condition_choiceTV;
     private TextView price_choiceTV;
 
@@ -116,11 +118,13 @@ public class AddFragment extends Fragment {
 
         cat_choiceLayout = v.findViewById(R.id.category_choice);
         brand_choiceLayout = v.findViewById(R.id.brand_choice);
+        size_choiceLayout = v.findViewById(R.id.size_choice);
         condition_choiceLayout = v.findViewById(R.id.condition_choice);
         price_choiceLayout = v.findViewById(R.id.price_choice);
 
         category_choiceTV = v.findViewById(R.id.category_choiceTV);
         brand_choiceTV = v.findViewById(R.id.brand_choiceTV);
+        size_choiceTV = v.findViewById(R.id.size_choiceTV);
         condition_choiceTV = v.findViewById(R.id.condition_choiceTV);
         price_choiceTV = v.findViewById(R.id.price_choiceTV);
 
@@ -130,7 +134,7 @@ public class AddFragment extends Fragment {
         userNameReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    fireBaseUserName = dataSnapshot.child(fireBaseUserId).child("username").getValue().toString();
+                fireBaseUserName = dataSnapshot.child(fireBaseUserId).child("username").getValue().toString();
             }
 
             @Override
@@ -159,12 +163,15 @@ public class AddFragment extends Fragment {
                     if(
                             mEditTextTitle.getText().toString().equals("") ||
                                     mEditTextDescription.getText().toString().equals("") ||
-                                        category_choiceTV.getText().toString().equals("") ||
-                                            brand_choiceTV.getText().toString().equals("") ||
-                                                condition_choiceTV.getText().toString().equals("") ||
-                                                    price_choiceTV.getText().toString().equals("")){
+                                    category_choiceTV.getText().toString().equals("") ||
+                                    brand_choiceTV.getText().toString().equals("") ||
+                                    size_choiceTV.getText().toString().equals("") ||
+                                    condition_choiceTV.getText().toString().equals("") ||
+                                    price_choiceTV.getText().toString().equals("")){
                         Toast.makeText(getContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
-                    } else{uploadFile();}
+                    } else{
+                        uploadFile();
+                    }
 
                 }
             }
@@ -191,52 +198,58 @@ public class AddFragment extends Fragment {
             AddFragmentModel addFragmentModel = viewModel.getData().getValue();
 
 
-        Bitmap image_bitmap = ((BitmapDrawable)addFragmentModel.getImageModel().getDrawable()).getBitmap();
+            Bitmap image_bitmap = ((BitmapDrawable)addFragmentModel.getImageModel().getDrawable()).getBitmap();
 
-        final int scrollPositionY = addFragmentModel.getScrollPositionY();
+            final int scrollPositionY = addFragmentModel.getScrollPositionY();
 
-        addScroll.postDelayed(new Runnable() {
-            @Override public void run()
-            { addScroll.scrollTo(0, scrollPositionY);
-            } }, 0);
+            addScroll.postDelayed(new Runnable() {
+                @Override public void run()
+                { addScroll.scrollTo(0, scrollPositionY);
+                } }, 0);
 
 
-        mImageView.setImageBitmap(image_bitmap);
-        if(addFragmentModel.getImageUri() != null){
-            mImageUri = addFragmentModel.getImageUri();
-        }
+            mImageView.setImageBitmap(image_bitmap);
+            if(addFragmentModel.getImageUri() != null){
+                mImageUri = addFragmentModel.getImageUri();
+            }
 
-        mEditTextTitle.setText(addFragmentModel.getTitleModel());
-        mEditTextDescription.setText(addFragmentModel.getDescriptionModel());
+            mEditTextTitle.setText(addFragmentModel.getTitleModel());
+            mEditTextDescription.setText(addFragmentModel.getDescriptionModel());
 
-        if (getArguments() != null) {
+            if (getArguments() != null) {
 
-            if (getArguments().getString("category_choiceArgument") != null) {
-                category_choiceTV.setText(getArguments().getString("category_choiceArgument"));
-            } else {
+                if (getArguments().getString("category_choiceArgument") != null) {
+                    category_choiceTV.setText(getArguments().getString("category_choiceArgument"));
+                } else {
+                    category_choiceTV.setText(addFragmentModel.getCategoryModel());
+                }
+                if (getArguments().getString("brand_choiceArgument") != null) {
+                    brand_choiceTV.setText(getArguments().getString("brand_choiceArgument"));
+                } else {
+                    brand_choiceTV.setText(addFragmentModel.getBrandModel());
+                }
+                if (getArguments().getString("size_choiceArgument") != null) {
+                    size_choiceTV.setText(getArguments().getString("size_choiceArgument"));
+                } else {
+                    size_choiceTV.setText(addFragmentModel.getSizeModel());
+                }
+                if (getArguments().getString("condition_choiceArgument") != null) {
+                    condition_choiceTV.setText(getArguments().getString("condition_choiceArgument"));
+                } else {
+                    condition_choiceTV.setText(addFragmentModel.getConditionModel());
+                }
+                if (getArguments().getString("price_choiceArgument") != null) {
+                    price_choiceTV.setText(addDollarSign(getArguments().getString("price_choiceArgument")));
+                } else {
+                    price_choiceTV.setText(addDollarSign(addFragmentModel.getPriceModel()));
+                }
+            }else{
                 category_choiceTV.setText(addFragmentModel.getCategoryModel());
-            }
-            if (getArguments().getString("brand_choiceArgument") != null) {
-                brand_choiceTV.setText(getArguments().getString("brand_choiceArgument"));
-            } else {
                 brand_choiceTV.setText(addFragmentModel.getBrandModel());
-            }
-            if (getArguments().getString("condition_choiceArgument") != null) {
-                condition_choiceTV.setText(getArguments().getString("condition_choiceArgument"));
-            } else {
+                size_choiceTV.setText(addFragmentModel.getSizeModel());
                 condition_choiceTV.setText(addFragmentModel.getConditionModel());
-            }
-            if (getArguments().getString("price_choiceArgument") != null) {
-                price_choiceTV.setText(addDollarSign(getArguments().getString("price_choiceArgument")));
-            } else {
                 price_choiceTV.setText(addDollarSign(addFragmentModel.getPriceModel()));
             }
-        }else{
-            category_choiceTV.setText(addFragmentModel.getCategoryModel());
-            brand_choiceTV.setText(addFragmentModel.getBrandModel());
-            condition_choiceTV.setText(addFragmentModel.getConditionModel());
-            price_choiceTV.setText(addDollarSign(addFragmentModel.getPriceModel()));
-        }
 
         }
 
@@ -258,6 +271,13 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_addFragment_to_brandChoiceFragment, bundle);
+            }
+        });
+
+        size_choiceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_addFragment_to_sizeChoiceFragment, bundle);
             }
         });
 
@@ -295,7 +315,7 @@ public class AddFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        
+
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null){
             mImageUri = data.getData();
@@ -320,40 +340,45 @@ public class AddFragment extends Fragment {
 
 
             mUploadTask = fileReference.putFile(mImageUri)
-                  .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                      @Override
-                      public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                          Handler handler = new Handler();
-                          handler.postDelayed(new Runnable() {
-                              @Override
-                              public void run() {
-                                  mProgressBar.setProgress(0);
-                              }
-                          }, 500);
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mProgressBar.setProgress(0);
+                                }
+                            }, 500);
 
-                          Toast.makeText(getContext(), "Upload successful", Toast.LENGTH_LONG).show();
-                          final String uploadID = mDataBaseRef.push().getKey();
-                          fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                              @Override
-                              public void onSuccess(Uri uri) {
-                                  AddFragmentModel upload = new AddFragmentModel(mEditTextTitle.getText().toString().trim(),
-                                          uri.toString(),
-                                          mEditTextDescription.getText().toString().trim(),
-                                          category_choiceTV.getText().toString().trim(),
-                                          brand_choiceTV.getText().toString().trim(),
-                                          condition_choiceTV.getText().toString().trim(),
-                                          price_choiceTV.getText().toString().trim(),
-                                          fireBaseUserName,
-                                          fireBaseUserId,
-                                          uploadID);
+                            Toast.makeText(getContext(), "Upload successful", Toast.LENGTH_LONG).show();
+                            final String uploadID = mDataBaseRef.push().getKey();
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    AddFragmentModel upload = new AddFragmentModel(mEditTextTitle.getText().toString().trim(),
+                                            uri.toString(),
+                                            mEditTextDescription.getText().toString().trim(),
+                                            category_choiceTV.getText().toString().trim(),
+                                            brand_choiceTV.getText().toString().trim(),
+                                            size_choiceTV.getText().toString().trim(),
+                                            condition_choiceTV.getText().toString().trim(),
+                                            price_choiceTV.getText().toString().trim(),
+                                            fireBaseUserName,
+                                            fireBaseUserId,
+                                            uploadID);
 
 
-                                  mDataBaseRef.child(uploadID).setValue(upload);
-                                  mDataBaseRefUser.child(uploadID).child("uploadID").setValue(uploadID);
-                              }
-                          });
-                      }
-                  })
+                                    mDataBaseRef.child(uploadID).setValue(upload);
+                                    mDataBaseRefUser.child(uploadID).child("uploadID").setValue(uploadID);
+
+                                    Bundle privateBundle = new Bundle();
+                                    privateBundle.putParcelable("item", upload);
+                                    navController.navigate(R.id.action_addFragment_to_marketItemFragment, privateBundle);
+                                }
+                            });
+                        }
+                    })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -361,12 +386,12 @@ public class AddFragment extends Fragment {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    mProgressBar.setProgress((int) progress);
-                }
-            });
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            mProgressBar.setProgress((int) progress);
+                        }
+                    });
         }
         else{
             Toast.makeText(getContext(), "No File Selected", Toast.LENGTH_SHORT).show();
@@ -394,6 +419,10 @@ public class AddFragment extends Fragment {
         if(brand_choiceTV.getText().equals("")){
             addFragmentModel.setBrandModel("");
         }else{addFragmentModel.setBrandModel(brand_choiceTV.getText().toString());}
+
+        if(size_choiceTV.getText().equals("")){
+            addFragmentModel.setSizeModel("");
+        }else{addFragmentModel.setSizeModel(size_choiceTV.getText().toString());}
 
         if(condition_choiceTV.getText().equals("")){
             addFragmentModel.setConditionModel("");

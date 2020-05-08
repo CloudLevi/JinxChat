@@ -225,6 +225,50 @@
                     android:orientation="horizontal" />
 
                 <RelativeLayout
+                    android:id="@+id/size_choice"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/size"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/arrow_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_arrow_right_24dp" />
+
+                    <TextView
+                        android:id="@+id/size_choiceTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/arrow_size"
+                        android:textColor="@color/PlainTextColor"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/space6"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/BarColor"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
                     android:id="@+id/market_edit_condition_choice"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
@@ -262,7 +306,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:id="@+id/space6"
+                    android:id="@+id/space7"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/BarColor"
@@ -306,7 +350,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:id="@+id/space7"
+                    android:id="@+id/space8"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/BarColor"

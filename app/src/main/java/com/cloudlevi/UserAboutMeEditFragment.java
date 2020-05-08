@@ -83,21 +83,38 @@ public class UserAboutMeEditFragment extends Fragment {
         mDataBaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    oldUserInfo = dataSnapshot.getValue(UserAboutMeModel.class);
-                    if(oldUserInfo != null) {
-                        if (oldUserInfo.getBioModel() != null) {
-                            mBioEditText.setText(oldUserInfo.getBioModel());
-                        }
-                        if (oldUserInfo.getBirthdayModel() != null) {
-                            mBirthDayTextView.setText(oldUserInfo.getBirthdayModel());
-                        }
-                        if (oldUserInfo.getCountryModel() != null) {
-                            mCountryEditText.setText(oldUserInfo.getCountryModel());
-                        }
-                        if (oldUserInfo.getCityModel() != null) {
-                            mCityEditText.setText(oldUserInfo.getCityModel());
-                        }
+                oldUserInfo = dataSnapshot.getValue(UserAboutMeModel.class);
+                if(oldUserInfo != null) {
+                    if (oldUserInfo.getBioModel() != null) {
+                        mBioEditText.setText(oldUserInfo.getBioModel());
                     }
+                    if (oldUserInfo.getGenderModel() != null){
+                        switch(oldUserInfo.getGenderModel()){
+                            case "Not Selected":
+                                mGenderSpinner.setSelection(0);
+                                break;
+                            case "Male":
+                                mGenderSpinner.setSelection(1);
+                                break;
+                            case "Female":
+                                mGenderSpinner.setSelection(2);
+                                break;
+                            case "Other":
+                                mGenderSpinner.setSelection(3);
+                                break;
+                        }
+
+                    }
+                    if (oldUserInfo.getBirthdayModel() != null) {
+                        mBirthDayTextView.setText(oldUserInfo.getBirthdayModel());
+                    }
+                    if (oldUserInfo.getCountryModel() != null) {
+                        mCountryEditText.setText(oldUserInfo.getCountryModel());
+                    }
+                    if (oldUserInfo.getCityModel() != null) {
+                        mCityEditText.setText(oldUserInfo.getCityModel());
+                    }
+                }
             }
 
             @Override
@@ -133,6 +150,7 @@ public class UserAboutMeEditFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mUserGender = parent.getItemAtPosition(position).toString();
+                System.out.println(mGenderSpinner.getSelectedItemPosition());
             }
 
             @Override

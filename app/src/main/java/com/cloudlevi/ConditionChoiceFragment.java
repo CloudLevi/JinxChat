@@ -48,11 +48,12 @@ public class ConditionChoiceFragment extends Fragment {
         ArrayList<String> conditions = new ArrayList<>();
 
         conditions.add("New with tags");
-        conditions.add("New without tags");
+        conditions.add("New, no tags");
         conditions.add("Almost new");
-        conditions.add("In good condition");
-        conditions.add("In worn condition");
-        conditions.add("In bad condition");
+        conditions.add("Good condition");
+        conditions.add("Worn condition");
+        conditions.add("Bad condition");
+
 
 
         adapter = new ArrayAdapter(getContext(), R.layout.listview_item_layout, conditions);

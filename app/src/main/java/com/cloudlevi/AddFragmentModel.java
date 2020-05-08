@@ -15,6 +15,7 @@ public class AddFragmentModel implements Parcelable {
     private String descriptionModel;
     private String categoryModel;
     private String brandModel;
+    private String sizeModel;
     private String conditionModel;
     private String priceModel;
 
@@ -32,13 +33,14 @@ public class AddFragmentModel implements Parcelable {
     public AddFragmentModel(){
     }
 
-    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String mconditionModel, String mpriceModel, String musernameModel, String muserIdModel, String muploadIDModel){
+    public AddFragmentModel(String mtitleModel, String mimageURL, String mdescriptionModel, String mcategoryModel, String mbrandModel, String msizeModel, String mconditionModel, String mpriceModel, String musernameModel, String muserIdModel, String muploadIDModel){
 
         titleModel = mtitleModel;
         imageURL = mimageURL;
         descriptionModel = mdescriptionModel;
         categoryModel = mcategoryModel;
         brandModel = mbrandModel;
+        sizeModel = msizeModel;
         conditionModel = mconditionModel;
         priceModel = mpriceModel;
         usernameModel = musernameModel;
@@ -53,6 +55,7 @@ public class AddFragmentModel implements Parcelable {
         descriptionModel = in.readString();
         categoryModel = in.readString();
         brandModel = in.readString();
+        sizeModel = in.readString();
         conditionModel = in.readString();
         priceModel = in.readString();
         imageURL = in.readString();
@@ -105,6 +108,14 @@ public class AddFragmentModel implements Parcelable {
 
     public void setBrandModel(String brandModel) {
         this.brandModel = brandModel;
+    }
+
+    public String getSizeModel() {
+        return sizeModel;
+    }
+
+    public void setSizeModel(String sizeModel) {
+        this.sizeModel = sizeModel;
     }
 
     public String getConditionModel() {
@@ -192,6 +203,7 @@ public class AddFragmentModel implements Parcelable {
         dest.writeString(descriptionModel);
         dest.writeString(categoryModel);
         dest.writeString(brandModel);
+        dest.writeString(sizeModel);
         dest.writeString(conditionModel);
         dest.writeString(priceModel);
         dest.writeString(imageURL);

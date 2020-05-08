@@ -62,13 +62,12 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
         });
         Picasso.get()
                 .load(itemCurrent.getImageURL())
-                .centerCrop()
                 .placeholder(R.drawable.progress_animation)
-                .fit()
                 .into(holder.imageView);
         holder.textViewUser.setText(itemCurrent.getUsernameModel());
         holder.textViewPrice.setText(itemCurrent.getPriceModel());
         holder.textViewBrand.setText(itemCurrent.getBrandModel());
+        holder.textViewSize.setText(itemCurrent.getSizeModel());
         holder.textViewCondition.setText(itemCurrent.getConditionModel());
 
         Bundle bundle = new Bundle();
@@ -93,6 +92,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
         public ImageView imageView;
         public TextView textViewPrice;
         public TextView textViewBrand;
+        public TextView textViewSize;
         public TextView textViewCondition;
         public LinearLayout marketItemLayout;
         public CircleImageView userCircleView;
@@ -104,6 +104,7 @@ public class MarketItemAdapter extends RecyclerView.Adapter<MarketItemAdapter.Ma
             imageView = itemView.findViewById(R.id.market_item_image);
             textViewPrice = itemView.findViewById(R.id.market_item_price);
             textViewBrand = itemView.findViewById(R.id.market_item_brand);
+            textViewSize = itemView.findViewById(R.id.market_item_size);
             textViewCondition = itemView.findViewById(R.id.market_item_condition);
             marketItemLayout = itemView.findViewById(R.id.market_item_layout);
             userCircleView = itemView.findViewById(R.id.market_item_userProfilePic);

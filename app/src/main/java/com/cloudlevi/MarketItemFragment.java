@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class MarketItemFragment extends Fragment {
     private TextView mUserNameTextView;
     private TextView mTitleTextView;
     private TextView mBrandTextView;
+    private TextView mSizeTextView;
     private TextView mConditionTextView;
     private TextView mPriceTextView;
     private TextView mDescriptionTextView;
@@ -53,6 +55,7 @@ public class MarketItemFragment extends Fragment {
     private String currentUserID;
 
     private RelativeLayout mUserForm;
+    private LinearLayout spaceInvisible;
 
     private AddFragmentModel addFragmentModel;
 
@@ -72,11 +75,14 @@ public class MarketItemFragment extends Fragment {
         mUserNameTextView = v.findViewById(R.id.marketFragmentUsername_tv);
         mTitleTextView = v.findViewById(R.id.marketFragmentTitle_tv);
         mBrandTextView = v.findViewById(R.id.marketFragmentBrand_tv);
+        mSizeTextView = v.findViewById(R.id.marketFragmentSize_tv);
         mConditionTextView = v.findViewById(R.id.marketFragmentCondition_tv);
         mPriceTextView = v.findViewById(R.id.marketFragmentPrice_tv);
         mDescriptionTextView = v.findViewById(R.id.marketFragmentDescrDetailed_tv);
         mFavoritesTextView = v.findViewById(R.id.favorites_tv);
         mFavoritesImageView = v.findViewById(R.id.favorites_image);
+
+        spaceInvisible = v.findViewById(R.id.spaceInvisible);
 
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -99,6 +105,7 @@ public class MarketItemFragment extends Fragment {
 
             if(itemUserID.equals(currentUserID)){
                 mEditButton.setVisibility(View.VISIBLE);
+                spaceInvisible.setVisibility(View.VISIBLE);
             }
 
             mDataBaseRef.child(addFragmentModel.getUserIdModel()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -118,6 +125,7 @@ public class MarketItemFragment extends Fragment {
             mUserNameTextView.setText(addFragmentModel.getUsernameModel());
             mTitleTextView.setText(addFragmentModel.getTitleModel());
             mBrandTextView.setText(addFragmentModel.getBrandModel());
+            mSizeTextView.setText(addFragmentModel.getSizeModel());
             mConditionTextView.setText(addFragmentModel.getConditionModel());
             mPriceTextView.setText(addFragmentModel.getPriceModel());
             mDescriptionTextView.setText(addFragmentModel.getDescriptionModel());
