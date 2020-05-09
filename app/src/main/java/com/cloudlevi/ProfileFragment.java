@@ -1,19 +1,12 @@
 package com.cloudlevi;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,15 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +39,8 @@ public class ProfileFragment extends Fragment {
 
     private RelativeLayout userForm;
     private RelativeLayout editProfileForm;
+    private RelativeLayout emailEditForm;
+    private RelativeLayout passwordEditForm;
 
     private TextView themeChange;
     private TextView userNameTextView;
@@ -65,7 +55,9 @@ public class ProfileFragment extends Fragment {
     private String firebaseUserName;
 
     private CardView logout;
-    private CardView uploadpic;
+    private CardView uploadPic;
+
+    private NavController navController;
 
     private Uri mImageUri;
 
@@ -83,10 +75,12 @@ public class ProfileFragment extends Fragment {
         emailTextView = v.findViewById(R.id.ProfileFragEmail_tv);
 
         logout = v.findViewById(R.id.logoutbtn);
-        uploadpic = v.findViewById(R.id.profilePicBTN);
+        uploadPic = v.findViewById(R.id.profilePicBTN);
 
         userForm = v.findViewById(R.id.ProfileFragUserForm);
         editProfileForm = v.findViewById(R.id.ProfileFrag_Edit_Form);
+        emailEditForm = v.findViewById(R.id.ProfileFrag_Email_Form);
+        passwordEditForm = v.findViewById(R.id.ProfileFrag_Pass_Form);
 
         SharedPreferences appSettingPrefs = this.getActivity().getSharedPreferences("AppSettingPrefs", 0);
         final SharedPreferences.Editor sharedPrefsEdit = appSettingPrefs.edit();
@@ -132,8 +126,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-        uploadpic.setOnClickListener(new View.OnClickListener() {
+        uploadPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChooser();
@@ -152,9 +145,9 @@ public class ProfileFragment extends Fragment {
         userForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                navController = Navigation.findNavController(v);
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", firebaseUser.getUid());
-                NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.action_profileFragment_to_userPagerAdapterFragment, bundle);
             }
         });
@@ -162,9 +155,9 @@ public class ProfileFragment extends Fragment {
         editProfileForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                navController = Navigation.findNavController(v);
                 Bundle bundle = new Bundle();
                 bundle.putString("userID", firebaseUser.getUid());
-                NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.action_profileFragment_to_userAboutMeEditFragment, bundle);
             }
         });
@@ -177,6 +170,22 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
+
+        emailEditForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_profileFragment_to_emailChangeFragment);
+            }
+        });
+
+        passwordEditForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_profileFragment_to_passwordChangeFragment);
+            }
+        });
     }
 
     private void openFileChooser(){

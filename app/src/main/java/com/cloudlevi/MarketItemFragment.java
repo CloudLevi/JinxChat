@@ -88,6 +88,7 @@ public class MarketItemFragment extends Fragment {
 
         mFavoritesButton = v.findViewById(R.id.addToFavoritesBtn);
         mEditButton = v.findViewById(R.id.editBTN);
+        mEditButton.setEnabled(false);
 
         mUserForm = v.findViewById(R.id.userForm);
 
@@ -104,6 +105,7 @@ public class MarketItemFragment extends Fragment {
             itemUserID = addFragmentModel.getUserIdModel();
 
             if(itemUserID.equals(currentUserID)){
+                mEditButton.setEnabled(true);
                 mEditButton.setVisibility(View.VISIBLE);
                 spaceInvisible.setVisibility(View.VISIBLE);
             }

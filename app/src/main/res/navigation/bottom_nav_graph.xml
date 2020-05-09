@@ -102,6 +102,20 @@
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_profileFragment_to_emailChangeFragment"
+            app:destination="@id/emailChangeFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_profileFragment_to_passwordChangeFragment"
+            app:destination="@id/passwordChangeFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
 
     </fragment>
     <fragment
@@ -300,6 +314,32 @@
         <action
             android:id="@+id/action_sizeChoiceFragment_to_marketItemEditFragment"
             app:destination="@id/marketItemEditFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/emailChangeFragment"
+        android:name="com.cloudlevi.EmailChangeFragment"
+        android:label="EmailChangeFragment"
+        tools:layout="@layout/fragment_email_change">
+        <action
+            android:id="@+id/action_emailChangeFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/passwordChangeFragment"
+        android:name="com.cloudlevi.PasswordChangeFragment"
+        android:label="PasswordChangeFragment"
+        tools:layout="@layout/fragment_password_change">
+        <action
+            android:id="@+id/action_passwordChangeFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"

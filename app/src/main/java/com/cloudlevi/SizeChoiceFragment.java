@@ -90,10 +90,10 @@ public class SizeChoiceFragment extends Fragment {
 
                 switch (initFragment){
                     case "Add_Fragment":
-                        //navController.navigate(R.id.action_sizeChoiceFragment_to_addFragment, bundle);
+                        navController.navigate(R.id.action_sizeChoiceFragment_to_addFragment, bundle);
                         break;
                     case "Edit_Fragment":
-                        //navController.navigate(R.id.action_sizeChoiceFragment_to_marketItemEditFragment, bundle);
+                        navController.navigate(R.id.action_sizeChoiceFragment_to_marketItemEditFragment, bundle);
                 }
 
 

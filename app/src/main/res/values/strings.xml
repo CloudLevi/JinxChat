@@ -55,6 +55,12 @@
     <string name="empty">Empty :(</string>
     <string name="edit">Edit</string>
     <string name="size">Size</string>
+    <string name="please_enter_your_password">Please enter your password:</string>
+    <string name="your_new_e_mail">Your new E-mail:</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="enter_your_current_password">Enter your current password:</string>
+    <string name="your_new_password">Your new password:</string>
+    <string name="update_password">Update Password</string>
 
     <string-array name="genders">
         <item>Not selected</item>
