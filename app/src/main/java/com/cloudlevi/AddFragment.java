@@ -7,8 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -256,7 +254,7 @@ public class AddFragment extends Fragment {
         cat_choiceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(category_choiceTV.getText().toString())) {
+                if(category_choiceTV.getText().toString().isEmpty()) {
                     navController.navigate(R.id.action_addFragment_to_categoryChoiceFragment, bundle);
                 }
                 else{
@@ -291,7 +289,7 @@ public class AddFragment extends Fragment {
         price_choiceLayout.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(price_choiceTV.getText().toString())) {
+                if(price_choiceTV.getText().toString().isEmpty()) {
                     navController.navigate(R.id.action_addFragment_to_priceChoiceFragment, bundle);
                 }
                 else{

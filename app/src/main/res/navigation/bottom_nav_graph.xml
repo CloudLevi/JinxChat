@@ -220,10 +220,10 @@
         <action
             android:id="@+id/action_marketItemFragment_to_marketItemEditFragment"
             app:destination="@id/marketItemEditFragment"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/userPagerAdapterFragment"
@@ -259,10 +259,10 @@
         <action
             android:id="@+id/action_marketItemEditFragment_to_marketItemFragment"
             app:destination="@id/marketItemFragment"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/fade_out"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/slide_down"/>
         <action
             android:id="@+id/action_marketItemEditFragment_to_categoryChoiceFragment"
             app:destination="@id/categoryChoiceFragment"

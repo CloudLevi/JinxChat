@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -254,7 +253,7 @@ public class MarketItemEditFragment extends Fragment {
         price_choiceLayout.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(price_choiceTV.getText().toString())) {
+                if(price_choiceTV.getText().toString().isEmpty()) {
                     navController.navigate(R.id.action_marketItemEditFragment_to_priceChoiceFragment, bundle);
                 }
                 else{

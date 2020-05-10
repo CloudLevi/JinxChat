@@ -10,7 +10,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,14 +103,14 @@ public class PriceChoiceFragment extends Fragment {
 
     private void calculatePrice() {
         CharSequence s = price_editText.getText();
-        if(!TextUtils.isEmpty(s)){
+        if(s.toString().isEmpty()){
 
             float price = Float.parseFloat(s.toString());
 
             price = Math.round((price*0.9));
             String finalPrice = String.valueOf(price).substring(0, String.valueOf(price).length() - 2);
-            String finalPricewithDollar = finalPrice + " $";
-            price_calcTV.setText(finalPricewithDollar);
+            String finalPriceWithDollar = finalPrice + " $";
+            price_calcTV.setText(finalPriceWithDollar);
         } else{
             price_calcTV.setText("0$");
         }

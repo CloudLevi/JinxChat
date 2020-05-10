@@ -7,15 +7,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 
-import android.animation.Animator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -100,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 String stringLogin = email.getText().toString();
                 String stringPass = password.getText().toString();
 
-                if(TextUtils.isEmpty(stringLogin) || TextUtils.isEmpty(stringPass)){
+                if(stringLogin.isEmpty() || stringPass.isEmpty()){
                     Toast.makeText(MainActivity.this, "Fill in the blanks", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -140,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 final String stringLogin = email.getText().toString().trim();
                 final String stringPass = password.getText().toString().trim();
 
-                if(TextUtils.isEmpty(stringUsername) || TextUtils.isEmpty(stringLogin) || TextUtils.isEmpty(stringPass)){
+                if(stringUsername.isEmpty() || stringLogin.isEmpty() || stringPass.isEmpty()){
                     Toast.makeText(MainActivity.this, "Fill in the blanks", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 6){
                     Toast.makeText(MainActivity.this, "The password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
