@@ -103,7 +103,7 @@ public class PriceChoiceFragment extends Fragment {
 
     private void calculatePrice() {
         CharSequence s = price_editText.getText();
-        if(s.toString().isEmpty()){
+        if(!s.toString().isEmpty()){
 
             float price = Float.parseFloat(s.toString());
 

@@ -61,6 +61,7 @@
     <string name="enter_your_current_password">Enter your current password:</string>
     <string name="your_new_password">Your new password:</string>
     <string name="update_password">Update Password</string>
+    <string name="delete_account">Delete Account</string>
 
     <string-array name="genders">
         <item>Not selected</item>

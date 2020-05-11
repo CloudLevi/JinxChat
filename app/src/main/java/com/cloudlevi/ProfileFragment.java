@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
     private String firebaseUserName;
 
     private CardView logout;
+    private CardView delete;
     private CardView uploadPic;
 
     private NavController navController;
@@ -78,6 +79,7 @@ public class ProfileFragment extends Fragment {
         emailTextView = v.findViewById(R.id.ProfileFragEmail_tv);
 
         logout = v.findViewById(R.id.logoutbtn);
+        delete = v.findViewById(R.id.deletebtn);
         uploadPic = v.findViewById(R.id.profilePicBTN);
 
         userForm = v.findViewById(R.id.ProfileFragUserForm);
@@ -142,6 +144,13 @@ public class ProfileFragment extends Fragment {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getActivity(), MainActivity.class));
 
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_profileFragment_to_deleteAccountFragment);
             }
         });
 
