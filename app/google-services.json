@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:3136942906:android:1327f5734867a61902d603",
         "android_client_info": {
-          "package_name": "com.cloudlevi"
+          "package_name": "com.JinxMarket"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "3136942906-8thou1kf9f2o2qo78l07vrqtp6ksnqum.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.cloudlevi",
+            "package_name": "com.JinxMarket",
             "certificate_hash": "554b3fb1b22a71aef791bf6255d30d780867cce5"
           }
         },

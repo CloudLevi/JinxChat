@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryComplementary">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fragmentChatToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/colorPrimaryComplementary">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/receiverPicture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                tools:src="@drawable/nazar" />
+
+            <TextView
+                android:id="@+id/receiverUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:textColor="@color/PlainTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="CloudLevi" />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messageRecyclerView"
+        android:layout_below="@+id/appbarLayout"
+        android:layout_above="@+id/messageForm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/messageForm"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryComplementary">
+
+        <EditText
+            android:id="@+id/messageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/sendBTN"
+            android:hint="@string/type_a_message"
+            android:textColor="@color/PlainTextColor" />
+
+        <ImageButton
+            android:id="@+id/sendBTN"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_send_black_24dp"/>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

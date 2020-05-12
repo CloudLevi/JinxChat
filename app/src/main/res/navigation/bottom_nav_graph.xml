@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.cloudlevi.HomeFragment"
+        android:name="com.JinxMarket.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.cloudlevi.AddFragment"
+        android:name="com.JinxMarket.AddFragment"
         android:label="AddFragment"
         tools:layout="@layout/fragment_add">
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.cloudlevi.FavoritesFragment"
+        android:name="com.JinxMarket.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/fragment_favorites">
         <action
@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.cloudlevi.ProfileFragment"
+        android:name="com.JinxMarket.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
 
@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryChoiceFragment"
-        android:name="com.cloudlevi.CategoryChoiceFragment"
+        android:name="com.JinxMarket.CategoryChoiceFragment"
         android:label="fragment_category_choice"
         tools:layout="@layout/fragment_category_choice" >
         <action
@@ -147,7 +147,7 @@
     </fragment>
     <fragment
         android:id="@+id/brandChoiceFragment"
-        android:name="com.cloudlevi.BrandChoiceFragment"
+        android:name="com.JinxMarket.BrandChoiceFragment"
         android:label="BrandChoiceFragment"
         tools:layout="@layout/fragment_brand_choice">
         <action
@@ -167,7 +167,7 @@
     </fragment>
     <fragment
         android:id="@+id/conditionChoiceFragment"
-        android:name="com.cloudlevi.ConditionChoiceFragment"
+        android:name="com.JinxMarket.ConditionChoiceFragment"
         android:label="ConditionChoiceFragment"
         tools:layout="@layout/fragment_condition_choice">
         <action
@@ -187,7 +187,7 @@
     </fragment>
     <fragment
         android:id="@+id/priceChoiceFragment"
-        android:name="com.cloudlevi.PriceChoiceFragment"
+        android:name="com.JinxMarket.PriceChoiceFragment"
         tools:layout="@layout/fragment_price_choice"
         android:label="PriceChoiceFragment" >
         <action
@@ -207,7 +207,7 @@
     </fragment>
     <fragment
         android:id="@+id/marketItemFragment"
-        android:name="com.cloudlevi.MarketItemFragment"
+        android:name="com.JinxMarket.MarketItemFragment"
         android:label="fragment_market_item"
         tools:layout="@layout/fragment_market_item" >
         <action
@@ -231,10 +231,17 @@
             app:popExitAnim="@anim/slide_down"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_marketItemFragment_to_chatFragment"
+            app:destination="@id/chatFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/userPagerAdapterFragment"
-        android:name="com.cloudlevi.UserPagerAdapterFragment"
+        android:name="com.JinxMarket.UserPagerAdapterFragment"
         android:label="UserPagerAdapterFragment"
         tools:layout="@layout/fragment_userpageradapter">
         <action
@@ -247,7 +254,7 @@
     </fragment>
     <fragment
         android:id="@+id/userAboutMeEditFragment"
-        android:name="com.cloudlevi.UserAboutMeEditFragment"
+        android:name="com.JinxMarket.UserAboutMeEditFragment"
         android:label="UserAboutMeEditFragment"
         tools:layout="@layout/fragment_user_about_me_edit">
         <action
@@ -260,7 +267,7 @@
     </fragment>
     <fragment
         android:id="@+id/marketItemEditFragment"
-        android:name="com.cloudlevi.MarketItemEditFragment"
+        android:name="com.JinxMarket.MarketItemEditFragment"
         android:label="MarketItemEditFragment"
         tools:layout="@layout/fragment_market_item_edit">
         <action
@@ -308,7 +315,7 @@
     </fragment>
     <fragment
         android:id="@+id/sizeChoiceFragment"
-        android:name="com.cloudlevi.SizeChoiceFragment"
+        android:name="com.JinxMarket.SizeChoiceFragment"
         android:label="SizeChoiceFragment"
         tools:layout="@layout/fragment_size_choice">
         <action
@@ -328,7 +335,7 @@
     </fragment>
     <fragment
         android:id="@+id/emailChangeFragment"
-        android:name="com.cloudlevi.EmailChangeFragment"
+        android:name="com.JinxMarket.EmailChangeFragment"
         android:label="EmailChangeFragment"
         tools:layout="@layout/fragment_email_change">
         <action
@@ -341,7 +348,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordChangeFragment"
-        android:name="com.cloudlevi.PasswordChangeFragment"
+        android:name="com.JinxMarket.PasswordChangeFragment"
         android:label="PasswordChangeFragment"
         tools:layout="@layout/fragment_password_change">
         <action
@@ -354,12 +361,25 @@
     </fragment>
     <fragment
         android:id="@+id/deleteAccountFragment"
-        android:name="com.cloudlevi.DeleteAccountFragment"
+        android:name="com.JinxMarket.DeleteAccountFragment"
         android:label="fragment_delete_account"
         tools:layout="@layout/fragment_delete_account" >
         <action
             android:id="@+id/action_deleteAccountFragment_to_profileFragment"
             app:destination="@id/profileFragment"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.JinxMarket.ChatFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_chatFragment_to_marketItemFragment"
+            app:destination="@id/marketItemFragment"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_left"
