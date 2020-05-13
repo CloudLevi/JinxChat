@@ -43,6 +43,8 @@ public class ChatListFragment extends Fragment {
     private String lastMessage;
     private String chatID;
 
+    private DataSnapshot updatedSnapshot;
+
     private List<ChatListModel> mChatListModels;
 
     private ArrayList<String> mUserIDList;
@@ -71,87 +73,51 @@ public class ChatListFragment extends Fragment {
         mSecondUserRef = FirebaseDatabase.getInstance().getReference("Users");
         mChatsRef = FirebaseDatabase.getInstance().getReference("Chats");
 
-        mUserChatsRef.addValueEventListener(new ValueEventListener() {
+        mRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mChatListModels.clear();
-                mUserIDList.clear();
+            public void onDataChange(@NonNull final DataSnapshot rootSnapshot) {
 
-                for(final DataSnapshot topSnapshot: dataSnapshot.getChildren()){
-                    System.out.println("Called");
+                mRootRef.child("Users").child(firebaseUser.getUid()).child("UserChats").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mChatListModels.clear();
+                        mUserIDList.clear();
+                        for(DataSnapshot currentUserChatSnapshot: dataSnapshot.getChildren()){
 
-                    if(firebaseUser.getUid().equals(topSnapshot.child("receiver").getValue().toString())){
-                        secondUserID = topSnapshot.child("sender").getValue().toString();
-                    }else{
-                        if(firebaseUser.getUid().equals(topSnapshot.child("sender").getValue().toString())){
-                            secondUserID = topSnapshot.child("receiver").getValue().toString();
+                            System.out.println(currentUserChatSnapshot.getKey() + "   KEY");
+
+                            if(firebaseUser.getUid().equals(currentUserChatSnapshot.child("receiver").getValue().toString())){
+                                secondUserID = currentUserChatSnapshot.child("sender").getValue().toString();
+                            }else{
+                                if(firebaseUser.getUid().equals(currentUserChatSnapshot.child("sender").getValue().toString())){
+                                    secondUserID = currentUserChatSnapshot.child("receiver").getValue().toString();
+                                }
+                            }
+
+
+                            secondUserImageURL = rootSnapshot.child("Users").child(secondUserID).child("imageURL").getValue().toString();
+                            secondUserUsername = rootSnapshot.child("Users").child(secondUserID).child("username").getValue().toString();
+
+                            lastMessage = currentUserChatSnapshot.child("lastMessage").getValue().toString();
+                            System.out.println(lastMessage);
+                            System.out.println(currentUserChatSnapshot);
+
+                            ChatListModel chatModel = new ChatListModel(secondUserImageURL, secondUserUsername, lastMessage);
+                            mChatListModels.add(chatModel);
+
+                            mUserIDList.add(secondUserID);
+
+                            mChatListAdapter = new ChatListAdapter(getContext(), mChatListModels, mUserIDList);
+
+                            recyclerView.setAdapter(mChatListAdapter);
                         }
                     }
 
-                    mSecondUserRef.child(secondUserID).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull final DataSnapshot mainSnapshot) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-                            mChatsRef.child(topSnapshot.child("chatID").getValue().toString()).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-                                        ChatMessageModel messageModel = postSnapshot.getValue(ChatMessageModel.class);
-                                        lastMessage = messageModel.getMessage();
-                                    }
-
-                                    String userID = "";
-
-                                    if(firebaseUser.getUid().equals(topSnapshot.child("receiver").getValue().toString())){
-                                        userID = topSnapshot.child("sender").getValue().toString();
-                                    }else{
-                                        if(firebaseUser.getUid().equals(topSnapshot.child("sender").getValue().toString())){
-                                            userID = topSnapshot.child("receiver").getValue().toString();
-                                        }
-                                    }
-
-                                    secondUserUsername = mainSnapshot.child("username").getValue().toString();
-                                    secondUserImageURL = mainSnapshot.child("imageURL").getValue().toString();
-
-                                    ChatListModel chatModel = new ChatListModel(secondUserImageURL, secondUserUsername, lastMessage);
-                                    mChatListModels.add(chatModel);
-
-                                    mUserIDList.add(userID);
-
-                                    System.out.println("---------------");
-                                    System.out.println(secondUserID);
-                                    System.out.println(topSnapshot.child("sender").getValue().toString() + " SENDER");
-                                    System.out.println(topSnapshot.child("receiver").getValue().toString() + " RECEIVER");
-                                    System.out.println(firebaseUser.getUid() + " CURRENT");
-                                    System.out.println(userID + " FINAL");
-
-
-
-                                    mChatListAdapter = new ChatListAdapter(getContext(), mChatListModels, mUserIDList);
-
-                                    recyclerView.setAdapter(mChatListAdapter);
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-
+                    }
+                });
 
             }
 
@@ -161,11 +127,9 @@ public class ChatListFragment extends Fragment {
             }
         });
 
+
         return v;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
+
 }

@@ -45,6 +45,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         Picasso.get()
                 .load(chatModel.getImageURL())
+                .placeholder(R.drawable.progress_animation_bigger)
                 .into(holder.circleImageView);
 
         holder.username.setText(chatModel.getUsername());

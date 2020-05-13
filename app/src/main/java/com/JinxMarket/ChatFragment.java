@@ -179,6 +179,7 @@ public class ChatFragment extends Fragment {
             userHashMap.put("sender", sender);
             userHashMap.put("receiver", receiver);
             userHashMap.put("chatID", mainChatID);
+            userHashMap.put("lastMessage", message);
 
             databaseUserSenderReference.child("UserChats").child(mainChatID).setValue(userHashMap);
             databaseUserReceiverReference.child("UserChats").child(mainChatID).setValue(userHashMap);
@@ -186,6 +187,9 @@ public class ChatFragment extends Fragment {
         }
 
         databaseChatReference.child(mainChatID).push().setValue(hashMap);
+
+        databaseUserSenderReference.child("UserChats").child(mainChatID).child("lastMessage").setValue(message);
+        databaseUserReceiverReference.child("UserChats").child(mainChatID).child("lastMessage").setValue(message);
 
         mEditMessage.setText("");
 
