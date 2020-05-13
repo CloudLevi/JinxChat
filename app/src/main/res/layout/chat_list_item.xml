@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ChatListLayout"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/colorPrimaryDark">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ChatListProfileImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        tools:src="@drawable/nazar" />
+
+    <TextView
+        android:id="@+id/ChatListUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ChatListProfileImage"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/ChatListProfileImage"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="CloudLevi" />
+
+    <TextView
+        android:id="@+id/ChatListLastMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ChatListUserName"
+        android:layout_alignStart="@id/ChatListUserName"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/PlainTextColor2"
+        android:textSize="18sp"
+        tools:text="Hey! I am interested in buying your item and want fo hhhhh" />
+
+    <LinearLayout
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/BarColor"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

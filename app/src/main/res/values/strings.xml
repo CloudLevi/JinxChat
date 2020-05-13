@@ -64,6 +64,7 @@
     <string name="delete_account">Delete Account</string>
     <string name="contact_seller">Contact Seller</string>
     <string name="type_a_message">Type a message...</string>
+    <string name="chats">Chats</string>
 
     <string-array name="genders">
         <item>Not selected</item>

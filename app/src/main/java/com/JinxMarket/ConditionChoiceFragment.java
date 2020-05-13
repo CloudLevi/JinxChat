@@ -53,6 +53,7 @@ public class ConditionChoiceFragment extends Fragment {
 
 
         adapter = new ArrayAdapter(getContext(), R.layout.listview_item_layout, conditions);
+
         conditionList.setAdapter(adapter);
 
 

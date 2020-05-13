@@ -5,18 +5,13 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/receiverProfilePicLeft"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/nazar" />
+
 
     <TextView
         android:id="@+id/userMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_toEndOf="@id/receiverProfilePicLeft"
         android:background="@drawable/background_message_left"
         android:padding="8dp"
         android:textSize="18sp"

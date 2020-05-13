@@ -1,5 +1,8 @@
 package com.JinxMarket;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +38,8 @@ import java.util.List;
 public class ChatFragment extends Fragment {
 
     private CircleImageView mReceiverProfileImage;
+    private Bitmap mReceiverImageBitmap;
+
     private TextView mReceiverUserName;
     private String mReceiverUserID;
 
@@ -50,7 +56,7 @@ public class ChatFragment extends Fragment {
     private String mainChatID;
 
     private MessageAdapter mMessageAdapter;
-    List<ChatMessageModel> mMessageModels;
+    private List<ChatMessageModel> mMessageModels;
 
     private RecyclerView mRecyclerView;
 
@@ -197,7 +203,7 @@ public class ChatFragment extends Fragment {
 
                     mMessageModels.add(messageModel);
 
-                    mMessageAdapter = new MessageAdapter(getContext(), mMessageModels, receiverImageURL);
+                    mMessageAdapter = new MessageAdapter(getContext(), mMessageModels);
                     mRecyclerView.setAdapter(mMessageAdapter);
                 }
 

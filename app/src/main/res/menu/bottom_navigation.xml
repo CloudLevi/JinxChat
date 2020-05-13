@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/home" />
     <item
+        android:id="@+id/chatListFragment"
+        android:icon="@drawable/ic_chat_bubble_black_24dp"
+        android:title="@string/chats" />
+    <item
         android:id="@+id/addFragment"
         android:icon="@drawable/ic_add_circle_black_24dp"
         android:title="@string/add" />
