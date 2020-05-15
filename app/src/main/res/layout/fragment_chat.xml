@@ -21,21 +21,48 @@
             android:layout_marginBottom="4dp"
             android:background="@color/colorPrimaryComplementary">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/receiverPicture"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                tools:src="@drawable/nazar" />
-
-            <TextView
-                android:id="@+id/receiverUserName"
+            <RelativeLayout
+                android:id="@+id/receiverLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:textColor="@color/PlainTextColor"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="CloudLevi" />
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/receiverPicture"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    tools:src="@drawable/nazar" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/receiverStatusImage"
+                    android:visibility="invisible"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@color/colorUserStatus"
+                    android:layout_alignEnd="@id/receiverPicture"
+                    android:layout_alignBottom="@id/receiverPicture"/>
+
+                <TextView
+                    android:id="@+id/receiverUserName"
+                    android:layout_toEndOf="@+id/receiverPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/PlainTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="CloudLevi" />
+                <TextView
+                    android:id="@+id/receiverStatusText"
+                    android:visibility="invisible"
+                    android:layout_below="@id/receiverUserName"
+                    android:layout_alignStart="@id/receiverUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    tools:text="online" />
+            </RelativeLayout>
 
 
         </androidx.appcompat.widget.Toolbar>

@@ -66,12 +66,18 @@ public class FavoritesFragment extends Fragment {
                     if(postSnapshot.child("uploadID").getValue() != null) {
                         fragmentEmpty = false;
                         final String uploadID = postSnapshot.child("uploadID").getValue().toString();
+
                         mUploadsReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                addFragmentModel = dataSnapshot.child(uploadID).getValue(AddFragmentModel.class);
-                                mAddFragmentModels.add(addFragmentModel);
+                                if(dataSnapshot.child(uploadID).getValue() != null){
+                                    addFragmentModel = dataSnapshot.child(uploadID).getValue(AddFragmentModel.class);
+                                    mAddFragmentModels.add(addFragmentModel);
+                                } else {
+                                    mFavoritesReference.child(uploadID).removeValue();
+                                }
+
 
                                     mAdapter = new MarketItemAdapter(getContext(), mAddFragmentModels, "FavoritesFragment");
 
@@ -86,7 +92,6 @@ public class FavoritesFragment extends Fragment {
                     }
                 }
                 if(fragmentEmpty){
-                    System.out.println("CALLED");
                     mProgressCircle.setVisibility(View.INVISIBLE);
                     emptyTV.setVisibility(View.VISIBLE);
                 }

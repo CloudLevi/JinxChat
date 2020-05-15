@@ -42,14 +42,14 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
 
-    def nav_version = "2.3.0-alpha05"
+    def nav_version = "2.3.0-alpha06"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
 
     //The Navigation Component
 
-    def nav_versionComponents = "2.3.0-alpha05"
+    def nav_versionComponents = "2.3.0-alpha06"
     implementation "androidx.navigation:navigation-fragment:$nav_versionComponents"
     implementation "androidx.navigation:navigation-ui:$nav_versionComponents"
 

@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences appSettingPrefs = getSharedPreferences("AppSettingPrefs", 0);
         Boolean isNightModeOn = appSettingPrefs.getBoolean("NightMode", false);
 
+
         if(isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -198,13 +199,15 @@ public class MainActivity extends AppCompatActivity {
                             storageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    final HashMap<String, String> hashMap = new HashMap<>();
-                                    hashMap.put("id", userId);
-                                    hashMap.put("username", stringUsername);
-                                    profPicDownloadURL = uri.toString();
-                                    hashMap.put("imageURL", profPicDownloadURL);
 
-                                    databasereference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    profPicDownloadURL = uri.toString();
+
+                                    UserModel userModel = new UserModel(userId,
+                                            stringUsername,
+                                            profPicDownloadURL,
+                                            "offline");
+
+                                    databasereference.setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);

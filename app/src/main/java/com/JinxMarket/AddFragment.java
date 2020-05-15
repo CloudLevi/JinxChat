@@ -195,7 +195,6 @@ public class AddFragment extends Fragment {
 
             AddFragmentModel addFragmentModel = viewModel.getData().getValue();
 
-
             Bitmap image_bitmap = ((BitmapDrawable)addFragmentModel.getImageModel().getDrawable()).getBitmap();
 
             final int scrollPositionY = addFragmentModel.getScrollPositionY();

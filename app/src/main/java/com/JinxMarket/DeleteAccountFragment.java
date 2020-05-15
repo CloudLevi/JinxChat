@@ -1,12 +1,14 @@
 package com.JinxMarket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,8 @@ public class DeleteAccountFragment extends Fragment {
 
     private String defaultImageURL;
 
+    private DeletingViewModel viewModel;
+
     public DeleteAccountFragment() {
     }
 
@@ -69,6 +73,8 @@ public class DeleteAccountFragment extends Fragment {
         defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/my-application-af75c.appspot.com/o/profilepics%2FDefaultProfilePic.png?alt=media&token=017b6c59-f031-4588-8732-d79c2738317a";
 
         fireBaseStorage = FirebaseStorage.getInstance();
+
+        viewModel = new ViewModelProvider(requireActivity()).get(DeletingViewModel.class);
 
         return v;
     }
@@ -108,8 +114,6 @@ public class DeleteAccountFragment extends Fragment {
 
                                                 for(DataSnapshot currentUploadItem: dataSnapshot.getChildren()){
 
-                                                    System.out.println("Inside loop -----");
-
                                                     final Object currentChild = currentUploadItem.child("uploadID").getValue();
                                                     if(currentChild != null){
                                                         databaseReferenceUploads.child(currentChild.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -129,8 +133,6 @@ public class DeleteAccountFragment extends Fragment {
                                                         });
                                                     }
                                                 }
-
-                                                System.out.println("After loop -----");
                                                 deleteUserRecords();
                                             }
 
@@ -139,8 +141,6 @@ public class DeleteAccountFragment extends Fragment {
 
                                             }
                                         });
-
-                                        System.out.println("Before deleting -----");
 
                                     }
 
@@ -183,8 +183,11 @@ public class DeleteAccountFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
+                viewModel.setData(true);
+
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
 
             }
         });

@@ -54,6 +54,17 @@
                     android:layout_marginStart="16dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/marketFragmentUserStatus"
+                    android:visibility="invisible"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@color/colorUserStatus"
+                    android:layout_alignEnd="@id/marketFragmentUserPic"
+                    android:layout_alignBottom="@id/marketFragmentUserPic"/>
+
                 <TextView
                     android:id="@+id/marketFragmentUsername_tv"
                     android:layout_width="wrap_content"

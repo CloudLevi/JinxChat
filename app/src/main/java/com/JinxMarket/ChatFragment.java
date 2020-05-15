@@ -1,6 +1,7 @@
 package com.JinxMarket;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -8,7 +9,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -19,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +48,11 @@ public class ChatFragment extends Fragment {
 
     private TextView mReceiverUserName;
     private String mReceiverUserID;
+    private String mReceiverStatus;
+
+    private ImageView mReceiverStatusImage;
+    private TextView mReceiverStatusText;
+    private RelativeLayout mReceiverLayout;
 
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -52,6 +63,8 @@ public class ChatFragment extends Fragment {
 
     private ImageButton mSendMessageBTN;
     private EditText mEditMessage;
+
+    private Boolean userDeleted = false;
 
     private String mainChatID;
 
@@ -92,6 +105,9 @@ public class ChatFragment extends Fragment {
 
         mReceiverProfileImage = v.findViewById(R.id.receiverPicture);
         mReceiverUserName = v.findViewById(R.id.receiverUserName);
+        mReceiverStatusImage = v.findViewById(R.id.receiverStatusImage);
+        mReceiverStatusText = v.findViewById(R.id.receiverStatusText);
+        mReceiverLayout = v.findViewById(R.id.receiverLayout);
 
         mSendMessageBTN = v.findViewById(R.id.sendBTN);
         mEditMessage = v.findViewById(R.id.messageEditText);
@@ -109,14 +125,41 @@ public class ChatFragment extends Fragment {
         databaseUserReceiverReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String snapshotUsername = dataSnapshot.child("username").getValue().toString();
-                receiverImageURL = dataSnapshot.child("imageURL").getValue().toString();
+                String snapshotUsername;
+                if(dataSnapshot.child("username").getValue() != null){
+                    snapshotUsername = dataSnapshot.child("username").getValue().toString();
+                    receiverImageURL = dataSnapshot.child("imageURL").getValue().toString();
+                    mReceiverStatus = dataSnapshot.child("status").getValue().toString();
+                } else{
+                    snapshotUsername = "[deleted user]";
+                    userDeleted = true;
+                    receiverImageURL = "https://firebasestorage.googleapis.com/v0/b/my-application-af75c.appspot.com/o/profilepics%2FDefaultProfilePic.png?alt=media&token=017b6c59-f031-4588-8732-d79c2738317a";
+                    mReceiverStatus = "deleted";
+                }
+
 
                 mReceiverUserName.setText(snapshotUsername);
 
                 Picasso.get()
                         .load(receiverImageURL)
                         .into(mReceiverProfileImage);
+                switch(mReceiverStatus){
+                    case "online":
+                        mReceiverStatusImage.setVisibility(View.VISIBLE);
+
+                        //mReceiverStatusText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorUserStatus));
+                        mReceiverStatusText.setTextColor(Color.parseColor("#29A15B"));
+                        mReceiverStatusText.setText(R.string.online);
+                        mReceiverStatusText.setVisibility(View.VISIBLE);
+                        break;
+                    case "offline":
+                        mReceiverStatusImage.setVisibility(View.INVISIBLE);
+
+                        //mReceiverStatusText.setTextColor(ContextCompat.getColor(getContext(), R.color.PlainTextColor2));
+                        mReceiverStatusText.setTextColor(Color.parseColor("#606060"));
+                        mReceiverStatusText.setText(R.string.offline);
+                        mReceiverStatusText.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -145,6 +188,8 @@ public class ChatFragment extends Fragment {
             }
         });
 
+
+
         return v;
     }
 
@@ -155,14 +200,38 @@ public class ChatFragment extends Fragment {
         mSendMessageBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = mEditMessage.getText().toString().trim();
-                if(!message.equals("")){
-                    sendMessage(firebaseUser.getUid(), mReceiverUserID, message);
-                }else{
-                    Toast.makeText(getContext(), "Empty Message", Toast.LENGTH_SHORT).show();
+                if(!userDeleted){
+                    String message = mEditMessage.getText().toString().trim();
+                    if(!message.equals("")){
+                        sendMessage(firebaseUser.getUid(), mReceiverUserID, message);
+                    }else{
+                        Toast.makeText(getContext(), "Empty Message", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getContext(), "User is deleted", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        mReceiverLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!userDeleted){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userID", mReceiverUserID);
+
+                    NavController navController = Navigation.findNavController(v);
+                    navController.navigate(R.id.action_chatFragment_to_userPagerAdapterFragment, bundle);
+                }
+                else{
+                    Toast.makeText(getContext(), "User is deleted", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
 
     private void sendMessage(String sender, String receiver, String message){

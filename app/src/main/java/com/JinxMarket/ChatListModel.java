@@ -6,14 +6,16 @@ public class ChatListModel {
     private String mImageURL;
     private String mUsername;
     private String mLastMessage;
+    private String mUserStatus;
 
     public ChatListModel(){
     }
 
-    public ChatListModel(String mImageURL, String mUsername, String mLastMessage) {
+    public ChatListModel(String mImageURL, String mUsername, String mLastMessage, String mUserStatus) {
         this.mImageURL = mImageURL;
         this.mUsername = mUsername;
         this.mLastMessage = mLastMessage;
+        this.mUserStatus = mUserStatus;
     }
 
     public String getImageURL() {
@@ -38,5 +40,13 @@ public class ChatListModel {
 
     public void setLastMessage(String mLastMessage) {
         this.mLastMessage = mLastMessage;
+    }
+
+    public String getUserStatus() {
+        return mUserStatus;
+    }
+
+    public void setUserStatus(String mUserStatus) {
+        this.mUserStatus = mUserStatus;
     }
 }

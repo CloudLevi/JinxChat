@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,12 +52,17 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         holder.username.setText(chatModel.getUsername());
         holder.lastMessage.setText(chatModel.getLastMessage());
 
+        if(chatModel.getUserStatus().equals("online")){
+            holder.userStatus.setVisibility(View.VISIBLE);
+        }else{
+            holder.userStatus.setVisibility(View.INVISIBLE);
+        }
+
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 Bundle bundle = new Bundle();
-                System.out.println(mUserIDList.get(position) + " BEFORE CALLING");
                 bundle.putString("userReceiverID", mUserIDList.get(position));
                 navController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
             }
@@ -74,6 +80,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         public TextView username;
         public TextView lastMessage;
         public RelativeLayout layout;
+        public ImageView userStatus;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -82,6 +89,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             username = itemView.findViewById(R.id.ChatListUserName);
             lastMessage = itemView.findViewById(R.id.ChatListLastMessage);
             layout = itemView.findViewById(R.id.ChatListLayout);
+            userStatus = itemView.findViewById(R.id.userStatus);
         }
     }
 }

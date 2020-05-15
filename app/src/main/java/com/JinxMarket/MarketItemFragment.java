@@ -32,14 +32,18 @@ import com.squareup.picasso.Picasso;
 public class MarketItemFragment extends Fragment {
 
     private ImageView mImageView;
+
     private CircleImageView mUserPicImageView;
+    private CircleImageView mUserStatusImage;
     private TextView mUserNameTextView;
+
     private TextView mTitleTextView;
     private TextView mBrandTextView;
     private TextView mSizeTextView;
     private TextView mConditionTextView;
     private TextView mPriceTextView;
     private TextView mDescriptionTextView;
+
     private TextView mFavoritesTextView;
 
     private ImageView mFavoritesImageView;
@@ -67,9 +71,11 @@ public class MarketItemFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_market_item, container, false);
 
         mImageView = v.findViewById(R.id.marketFragmentImage);
-        mUserPicImageView = v.findViewById(R.id.marketFragmentUserPic);
 
+        mUserPicImageView = v.findViewById(R.id.marketFragmentUserPic);
         mUserNameTextView = v.findViewById(R.id.marketFragmentUsername_tv);
+        mUserStatusImage = v.findViewById(R.id.marketFragmentUserStatus);
+
         mTitleTextView = v.findViewById(R.id.marketFragmentTitle_tv);
         mBrandTextView = v.findViewById(R.id.marketFragmentBrand_tv);
         mSizeTextView = v.findViewById(R.id.marketFragmentSize_tv);
@@ -111,12 +117,19 @@ public class MarketItemFragment extends Fragment {
                 mMessageButton.setVisibility(View.VISIBLE);
             }
 
-            mDataBaseRef.child(addFragmentModel.getUserIdModel()).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDataBaseRef.child(addFragmentModel.getUserIdModel()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Picasso.get()
                             .load(dataSnapshot.child("imageURL").getValue().toString())
                             .into(mUserPicImageView);
+
+                    if(dataSnapshot.child("status").getValue().toString().equals("online")){
+                        mUserStatusImage.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        mUserStatusImage.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override

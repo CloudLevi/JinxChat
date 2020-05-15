@@ -3,7 +3,11 @@ package com.JinxMarket;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,6 +33,8 @@ public class UserPageFragment extends Fragment {
 
     private MarketItemHomePageAdapter mAdapter;
 
+    private CardView mContactUserBTN;
+
     private DatabaseReference mDataBaseUploadsRef;
     private DatabaseReference mDataBaseRef;
     private DatabaseReference mDataBaseUserRef;
@@ -41,6 +47,7 @@ public class UserPageFragment extends Fragment {
 
     private TextView usernameTextView;
     private CircleImageView userPic;
+    private CircleImageView userStatus;
     private TextView itemCount;
 
 
@@ -65,9 +72,12 @@ public class UserPageFragment extends Fragment {
 
         usernameTextView = v.findViewById(R.id.UserPageUsername_tv);
         userPic = v.findViewById(R.id.UserPageUserPic);
+        userStatus = v.findViewById(R.id.UserPageUserStatus);
 
         mProgressCircle = v.findViewById(R.id.progress_homepage_circle);
         itemCount = v.findViewById(R.id.itemCount);
+
+        mContactUserBTN = v.findViewById(R.id.contactUserBTN);
 
         mAddFragmentModels = new ArrayList<>();
 
@@ -76,13 +86,20 @@ public class UserPageFragment extends Fragment {
         mDataBaseUserRef = FirebaseDatabase.getInstance().getReference("Users/" + userID);
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
-        mDataBaseUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDataBaseUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Picasso.get()
                         .load(dataSnapshot.child("imageURL").getValue().toString())
                         .into(userPic);
+
                 usernameTextView.setText(dataSnapshot.child("username").getValue().toString());
+
+                if(dataSnapshot.child("status").getValue().equals("online")){
+                    userStatus.setVisibility(View.VISIBLE);
+                }else{
+                    userStatus.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -133,10 +150,23 @@ public class UserPageFragment extends Fragment {
 
         mProgressCircle.setVisibility(View.INVISIBLE);
 
+    return v;
+    }
 
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        mContactUserBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("userReceiverID", userID);
 
-        return v;
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_userPagerAdapterFragment_to_chatFragment, bundle);
+            }
+        });
     }
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +41,7 @@ public class ChatListFragment extends Fragment {
 
     private String secondUserUsername;
     private String secondUserImageURL;
+    private String secondUserStatus;
     private String lastMessage;
     private String chatID;
 
@@ -50,6 +52,8 @@ public class ChatListFragment extends Fragment {
     private ArrayList<String> mUserIDList;
 
     private ChatListAdapter mChatListAdapter;
+
+    private int count;
 
     public ChatListFragment() {
     }
@@ -84,8 +88,6 @@ public class ChatListFragment extends Fragment {
                         mUserIDList.clear();
                         for(DataSnapshot currentUserChatSnapshot: dataSnapshot.getChildren()){
 
-                            System.out.println(currentUserChatSnapshot.getKey() + "   KEY");
-
                             if(firebaseUser.getUid().equals(currentUserChatSnapshot.child("receiver").getValue().toString())){
                                 secondUserID = currentUserChatSnapshot.child("sender").getValue().toString();
                             }else{
@@ -95,14 +97,23 @@ public class ChatListFragment extends Fragment {
                             }
 
 
+                            if(rootSnapshot.child("Users").child(secondUserID).getValue() != null){
+
+
                             secondUserImageURL = rootSnapshot.child("Users").child(secondUserID).child("imageURL").getValue().toString();
                             secondUserUsername = rootSnapshot.child("Users").child(secondUserID).child("username").getValue().toString();
+                            secondUserStatus = rootSnapshot.child("Users").child(secondUserID).child("status").getValue().toString();
+
+
+                            }else{
+                                secondUserImageURL = "https://firebasestorage.googleapis.com/v0/b/my-application-af75c.appspot.com/o/profilepics%2FDefaultProfilePic.png?alt=media&token=017b6c59-f031-4588-8732-d79c2738317a";
+                                secondUserUsername = "[deleted user]";
+                                secondUserStatus = "offline";
+                            }
 
                             lastMessage = currentUserChatSnapshot.child("lastMessage").getValue().toString();
-                            System.out.println(lastMessage);
-                            System.out.println(currentUserChatSnapshot);
 
-                            ChatListModel chatModel = new ChatListModel(secondUserImageURL, secondUserUsername, lastMessage);
+                            ChatListModel chatModel = new ChatListModel(secondUserImageURL, secondUserUsername, lastMessage, secondUserStatus);
                             mChatListModels.add(chatModel);
 
                             mUserIDList.add(secondUserID);
@@ -128,8 +139,8 @@ public class ChatListFragment extends Fragment {
         });
 
 
+
         return v;
     }
-
 
 }
