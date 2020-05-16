@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
                                     progress.setVisibility(View.INVISIBLE);
-                                    System.out.println(databaseError.getMessage());
                                 }
                             }
                     );

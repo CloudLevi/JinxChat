@@ -17,6 +17,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userStatus"
+        android:visibility="invisible"
         android:layout_width="13dp"
         android:layout_height="13dp"
         android:layout_alignEnd="@+id/ChatListProfileImage"

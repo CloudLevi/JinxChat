@@ -6,6 +6,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.os.Bundle;
 
+import java.io.IOException;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -34,10 +36,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -137,7 +142,6 @@ public class ChatFragment extends Fragment {
                     mReceiverStatus = "deleted";
                 }
 
-
                 mReceiverUserName.setText(snapshotUsername);
 
                 Picasso.get()
@@ -147,7 +151,6 @@ public class ChatFragment extends Fragment {
                     case "online":
                         mReceiverStatusImage.setVisibility(View.VISIBLE);
 
-                        //mReceiverStatusText.setTextColor(ContextCompat.getColor(getContext(), R.color.colorUserStatus));
                         mReceiverStatusText.setTextColor(Color.parseColor("#29A15B"));
                         mReceiverStatusText.setText(R.string.online);
                         mReceiverStatusText.setVisibility(View.VISIBLE);
@@ -155,7 +158,6 @@ public class ChatFragment extends Fragment {
                     case "offline":
                         mReceiverStatusImage.setVisibility(View.INVISIBLE);
 
-                        //mReceiverStatusText.setTextColor(ContextCompat.getColor(getContext(), R.color.PlainTextColor2));
                         mReceiverStatusText.setTextColor(Color.parseColor("#606060"));
                         mReceiverStatusText.setText(R.string.offline);
                         mReceiverStatusText.setVisibility(View.VISIBLE);
@@ -236,6 +238,8 @@ public class ChatFragment extends Fragment {
 
     private void sendMessage(String sender, String receiver, String message){
 
+        long messageTime = -1 * System.currentTimeMillis();
+
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
@@ -249,6 +253,7 @@ public class ChatFragment extends Fragment {
             userHashMap.put("receiver", receiver);
             userHashMap.put("chatID", mainChatID);
             userHashMap.put("lastMessage", message);
+            userHashMap.put("time", messageTime);
 
             databaseUserSenderReference.child("UserChats").child(mainChatID).setValue(userHashMap);
             databaseUserReceiverReference.child("UserChats").child(mainChatID).setValue(userHashMap);
@@ -258,7 +263,9 @@ public class ChatFragment extends Fragment {
         databaseChatReference.child(mainChatID).push().setValue(hashMap);
 
         databaseUserSenderReference.child("UserChats").child(mainChatID).child("lastMessage").setValue(message);
+        databaseUserSenderReference.child("UserChats").child(mainChatID).child("time").setValue(messageTime);
         databaseUserReceiverReference.child("UserChats").child(mainChatID).child("lastMessage").setValue(message);
+        databaseUserReceiverReference.child("UserChats").child(mainChatID).child("time").setValue(messageTime);
 
         mEditMessage.setText("");
 

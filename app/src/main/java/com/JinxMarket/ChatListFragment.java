@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class ChatListFragment extends Fragment {
 
     private FirebaseUser firebaseUser;
 
+    private String firstUserID;
     private String secondUserID;
 
     private String secondUserUsername;
@@ -49,11 +52,9 @@ public class ChatListFragment extends Fragment {
 
     private List<ChatListModel> mChatListModels;
 
-    private ArrayList<String> mUserIDList;
+    private Boolean firstTime = true;
 
     private ChatListAdapter mChatListAdapter;
-
-    private int count;
 
     public ChatListFragment() {
     }
@@ -70,7 +71,6 @@ public class ChatListFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mChatListModels = new ArrayList<>();
-        mUserIDList = new ArrayList<>();
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mUserChatsRef = FirebaseDatabase.getInstance().getReference("Users/" + firebaseUser.getUid() + "/UserChats");
@@ -81,17 +81,18 @@ public class ChatListFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull final DataSnapshot rootSnapshot) {
 
-                mRootRef.child("Users").child(firebaseUser.getUid()).child("UserChats").addValueEventListener(new ValueEventListener() {
+                mRootRef.child("Users").child(firebaseUser.getUid()).child("UserChats").orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         mChatListModels.clear();
-                        mUserIDList.clear();
-                        for(DataSnapshot currentUserChatSnapshot: dataSnapshot.getChildren()){
+                        for(final DataSnapshot currentUserChatSnapshot: dataSnapshot.getChildren()){
 
                             if(firebaseUser.getUid().equals(currentUserChatSnapshot.child("receiver").getValue().toString())){
+                                firstUserID = currentUserChatSnapshot.child("receiver").getValue().toString();
                                 secondUserID = currentUserChatSnapshot.child("sender").getValue().toString();
                             }else{
                                 if(firebaseUser.getUid().equals(currentUserChatSnapshot.child("sender").getValue().toString())){
+                                    firstUserID = currentUserChatSnapshot.child("sender").getValue().toString();
                                     secondUserID = currentUserChatSnapshot.child("receiver").getValue().toString();
                                 }
                             }
@@ -112,17 +113,54 @@ public class ChatListFragment extends Fragment {
                             }
 
                             lastMessage = currentUserChatSnapshot.child("lastMessage").getValue().toString();
+                            chatID = currentUserChatSnapshot.child("chatID").getValue().toString();
 
-                            ChatListModel chatModel = new ChatListModel(secondUserImageURL, secondUserUsername, lastMessage, secondUserStatus);
+                            final ChatListModel chatModel = new ChatListModel(chatID, firstUserID, secondUserID, secondUserImageURL, secondUserUsername, lastMessage, secondUserStatus);
                             mChatListModels.add(chatModel);
 
-                            mUserIDList.add(secondUserID);
-
-                            mChatListAdapter = new ChatListAdapter(getContext(), mChatListModels, mUserIDList);
+                            mChatListAdapter = new ChatListAdapter(getContext(), mChatListModels);
 
                             recyclerView.setAdapter(mChatListAdapter);
+
+                                    currentUserChatSnapshot.getRef().addChildEventListener(new ChildEventListener() {
+                                        @Override
+                                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                                int mChatListModelsIndex = 0;
+
+                                                for (int i = 0; i < mChatListModels.size(); i++) {
+
+                                                    if (mChatListModels.get(i).getChatID().equals(currentUserChatSnapshot.child("chatID").getValue().toString())) {
+                                                        mChatListModelsIndex = i;
+                                                    }
+                                                }
+
+                                                mChatListAdapter.swapItems(mChatListModelsIndex, 0);
+                                        }
+
+                                        @Override
+                                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                        }
+
+                                        @Override
+                                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                }
                         }
-                    }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -137,8 +175,6 @@ public class ChatListFragment extends Fragment {
 
             }
         });
-
-
 
         return v;
     }
