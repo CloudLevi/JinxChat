@@ -23,6 +23,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private List<ChatMessageModel> mMessageModels;
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+    private Boolean isRight;
+
     public MessageAdapter(Context context, List<ChatMessageModel> chatMessageModels){
         mContext = context;
         mMessageModels = chatMessageModels;
@@ -47,6 +49,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         holder.userMessage.setText(messageModel.getMessage());
 
+        if(isRight){
+            if(position == mMessageModels.size() - 1){
+                if(messageModel.getIsRead()){
+                    holder.isReadTextView.setVisibility(View.VISIBLE);
+                    holder.isReadTextView.setText("Seen");
+                }
+                else{
+                    holder.isReadTextView.setVisibility(View.VISIBLE);
+                    holder.isReadTextView.setText("Delivered");
+                }
+            } else {
+                holder.isReadTextView.setVisibility(View.GONE);
+            }
+        }
+
     }
 
     @Override
@@ -59,19 +76,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView userMessage;
+        public TextView isReadTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userMessage = itemView.findViewById(R.id.userMessage);
+            isReadTextView = itemView.findViewById(R.id.isReadTextView);
+
         }
     }
 
     @Override
     public int getItemViewType(int position) {
         if(mMessageModels.get(position).getSender().equals(firebaseUser.getUid())){
+            isRight = true;
             return MSG_TYPE_RIGHT;
         } else {
+            isRight = false;
             return MSG_TYPE_LEFT;
         }
     }

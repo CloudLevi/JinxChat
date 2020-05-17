@@ -23,6 +23,16 @@
             android:textSize="18sp"
             tools:text="Hello world" />
 
+        <TextView
+            android:id="@+id/isReadTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userMessage"
+            android:layout_alignEnd="@id/userMessage"
+            android:textColor="@color/PlainTextColor2"
+            android:visibility="gone"
+            tools:text="Seen" />
+
     </RelativeLayout>
 
 </RelativeLayout>

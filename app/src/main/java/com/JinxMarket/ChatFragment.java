@@ -1,18 +1,11 @@
 package com.JinxMarket;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Bundle;
-
-import java.io.IOException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,24 +29,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class ChatFragment extends Fragment {
 
     private CircleImageView mReceiverProfileImage;
-    private Bitmap mReceiverImageBitmap;
 
     private TextView mReceiverUserName;
     private String mReceiverUserID;
     private String mReceiverStatus;
+
+    private ValueEventListener seenListener;
 
     private ImageView mReceiverStatusImage;
     private TextView mReceiverStatusText;
@@ -63,6 +54,7 @@ public class ChatFragment extends Fragment {
 
     private DatabaseReference databaseUserReceiverReference;
     private DatabaseReference databaseUserSenderReference;
+    private DatabaseReference currentMessageReference;
 
     private DatabaseReference databaseChatReference;
 
@@ -70,6 +62,7 @@ public class ChatFragment extends Fragment {
     private EditText mEditMessage;
 
     private Boolean userDeleted = false;
+    private Boolean messageStatusListening = true;
 
     private String mainChatID;
 
@@ -83,7 +76,6 @@ public class ChatFragment extends Fragment {
     public ChatFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,6 +83,7 @@ public class ChatFragment extends Fragment {
 
         if(getArguments() != null){
             mReceiverUserID = getArguments().getString("userReceiverID");
+            mainChatID = getArguments().getString("chatID");
         }
 
         Toolbar toolbar = v.findViewById(R.id.fragmentChatToolbar);
@@ -178,8 +171,8 @@ public class ChatFragment extends Fragment {
                             && (postSnapshot.child("sender").getValue().toString().equals(mReceiverUserID)
                             || postSnapshot.child("receiver").getValue().toString().equals(mReceiverUserID))
                     ){
-                        mainChatID = postSnapshot.child("chatID").getValue().toString();
                         getMessages();
+                        messageSeen(mReceiverUserID);
                     }
                 }
             }
@@ -189,8 +182,6 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
-
 
         return v;
     }
@@ -236,6 +227,44 @@ public class ChatFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        messageStatusListening = true;
+        messageSeen(mReceiverUserID);
+    }
+
+    private void messageSeen(final String userID){
+
+            System.out.println(mainChatID);
+
+            currentMessageReference = databaseChatReference.child(mainChatID);
+
+            seenListener = currentMessageReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(messageStatusListening){
+                    for (DataSnapshot currentMessage : dataSnapshot.getChildren()) {
+
+                        ChatMessageModel messageModel = currentMessage.getValue(ChatMessageModel.class);
+
+                        if (messageModel.getReceiver().equals(firebaseUser.getUid()) && messageModel.getSender().equals(userID)) {
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("isRead", true);
+                            currentMessage.getRef().updateChildren(hashMap);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void sendMessage(String sender, String receiver, String message){
 
         long messageTime = -1 * System.currentTimeMillis();
@@ -244,6 +273,7 @@ public class ChatFragment extends Fragment {
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
+        hashMap.put("isRead", false);
 
         if(mainChatID == null){
             mainChatID = databaseChatReference.push().getKey();
@@ -295,5 +325,11 @@ public class ChatFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        messageStatusListening = false;
     }
 }

@@ -167,7 +167,6 @@ public class AddFragmentModel implements Parcelable {
     public void setScrollPositionY(int scrollPositionY) {
         this.scrollPositionY = scrollPositionY;
     }
-
     public String getUsernameModel() {
         return usernameModel;
     }

@@ -5,14 +5,16 @@ public class ChatMessageModel {
     private String sender;
     private String receiver;
     private String message;
+    private boolean isRead;
 
     public ChatMessageModel(){
     }
 
-    public ChatMessageModel(String sender, String receiver, String message) {
+    public ChatMessageModel(String sender, String receiver, String message, boolean isRead) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
+        this.isRead = isRead;
     }
 
     public String getSender() {
@@ -37,5 +39,13 @@ public class ChatMessageModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(boolean read) {
+        isRead = read;
     }
 }
