@@ -44,6 +44,7 @@ public class MarketItemEditFragment extends Fragment {
 
     private CardView mButtonChooseFile;
     private CardView mButtonApply;
+    private CardView mButtonDelete;
 
 
     private EditText mEditTextTitle;
@@ -72,7 +73,9 @@ public class MarketItemEditFragment extends Fragment {
     private MarketItemEditFragmentViewModel viewModel;
 
     private DatabaseReference mDataBaseReference;
+    private DatabaseReference mUserReference;
     private StorageReference mStorageReference;
+
     private FirebaseStorage mFireBaseStorage;
     private StorageTask mUploadTask;
 
@@ -82,6 +85,8 @@ public class MarketItemEditFragment extends Fragment {
     private String fireBaseUserId;
 
     private AddFragmentModel uploadObject;
+
+    private int fragmentID;
 
     public MarketItemEditFragment() {
     }
@@ -100,6 +105,7 @@ public class MarketItemEditFragment extends Fragment {
 
         mButtonChooseFile = v.findViewById(R.id.market_edit_choosebtn);
         mButtonApply = v.findViewById(R.id.market_edit_ApplyBtn);
+        mButtonDelete = v.findViewById(R.id.market_edit_deleteBTN);
 
         mEditTextTitle = v.findViewById(R.id.market_edit_title_ed);
         mEditTextDescription = v.findViewById(R.id.market_edit_descr_ed);
@@ -139,6 +145,8 @@ public class MarketItemEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
+        fragmentID = this.getId();
+
         if(getArguments() != null && getArguments().getParcelable("item") != null){
             initialFragmentModel = getArguments().getParcelable("item");
 
@@ -148,6 +156,7 @@ public class MarketItemEditFragment extends Fragment {
             fireBaseUserId = initialFragmentModel.getUserIdModel();
 
             mDataBaseReference = FirebaseDatabase.getInstance().getReference("uploads/" + uploadID);
+            mUserReference = FirebaseDatabase.getInstance().getReference("Users/" + fireBaseUserId);
 
             Picasso.get()
                     .load(initialFragmentModel.getImageURL())
@@ -280,6 +289,14 @@ public class MarketItemEditFragment extends Fragment {
                         uploadFile();
                     }}
 
+            }
+        });
+
+        mButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteItemDialog dialog = new DeleteItemDialog();
+                dialog.show(getActivity().getSupportFragmentManager(), "DeleteItemDialog");
             }
         });
 
@@ -439,4 +456,14 @@ public class MarketItemEditFragment extends Fragment {
         }
 
     }
+
+    public void deleteItem(){
+        mProgressBar.setVisibility(View.VISIBLE);
+        mDataBaseReference.removeValue();
+        mUserReference.child("UserUploads").child(uploadID).removeValue();
+        StorageReference mPhotoRef = mFireBaseStorage.getReferenceFromUrl(mOldDownloadURL);
+        mPhotoRef.delete();
+        navController.navigate(R.id.action_marketItemEditFragment_to_homeFragment);
+    }
+
 }

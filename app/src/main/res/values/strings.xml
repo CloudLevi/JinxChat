@@ -68,6 +68,7 @@
     <string name="online">online</string>
     <string name="offline">offline</string>
     <string name="Message">Message</string>
+    <string name="delete">Delete</string>
 
     <string-array name="genders">
         <item>Not selected</item>

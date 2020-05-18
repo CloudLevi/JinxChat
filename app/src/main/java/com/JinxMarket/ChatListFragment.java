@@ -5,14 +5,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.renderscript.Sampler;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,6 +61,8 @@ public class ChatListFragment extends Fragment {
 
     private ChatListAdapter mChatListAdapter;
 
+    private NavController finalNavController;
+
     public ChatListFragment() {
     }
 
@@ -76,6 +83,16 @@ public class ChatListFragment extends Fragment {
         mUserChatsRef = FirebaseDatabase.getInstance().getReference("Users/" + firebaseUser.getUid() + "/UserChats");
         mSecondUserRef = FirebaseDatabase.getInstance().getReference("Users");
         mChatsRef = FirebaseDatabase.getInstance().getReference("Chats");
+
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        registerForContextMenu(recyclerView);
+        finalNavController = Navigation.findNavController(view);
+
 
         mRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -101,9 +118,9 @@ public class ChatListFragment extends Fragment {
                             if(rootSnapshot.child("Users").child(secondUserID).getValue() != null){
 
 
-                            secondUserImageURL = rootSnapshot.child("Users").child(secondUserID).child("imageURL").getValue().toString();
-                            secondUserUsername = rootSnapshot.child("Users").child(secondUserID).child("username").getValue().toString();
-                            secondUserStatus = rootSnapshot.child("Users").child(secondUserID).child("status").getValue().toString();
+                                secondUserImageURL = rootSnapshot.child("Users").child(secondUserID).child("imageURL").getValue().toString();
+                                secondUserUsername = rootSnapshot.child("Users").child(secondUserID).child("username").getValue().toString();
+                                secondUserStatus = rootSnapshot.child("Users").child(secondUserID).child("status").getValue().toString();
 
 
                             }else{
@@ -118,49 +135,49 @@ public class ChatListFragment extends Fragment {
                             final ChatListModel chatModel = new ChatListModel(chatID, firstUserID, secondUserID, secondUserImageURL, secondUserUsername, lastMessage, secondUserStatus);
                             mChatListModels.add(chatModel);
 
-                            mChatListAdapter = new ChatListAdapter(getContext(), mChatListModels);
+                            mChatListAdapter = new ChatListAdapter(getContext(), mChatListModels, finalNavController);
 
                             recyclerView.setAdapter(mChatListAdapter);
 
-                                    currentUserChatSnapshot.getRef().addChildEventListener(new ChildEventListener() {
-                                        @Override
-                                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                                int mChatListModelsIndex = 0;
-
-                                                for (int i = 0; i < mChatListModels.size(); i++) {
-
-                                                    if (mChatListModels.get(i).getChatID().equals(currentUserChatSnapshot.child("chatID").getValue().toString())) {
-                                                        mChatListModelsIndex = i;
-                                                    }
-                                                }
-
-                                                mChatListAdapter.swapItems(mChatListModelsIndex, 0);
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
+                            currentUserChatSnapshot.getRef().addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                                 }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    int mChatListModelsIndex = 0;
+
+                                    for (int i = 0; i < mChatListModels.size(); i++) {
+
+                                        if (mChatListModels.get(i).getChatID().equals(currentUserChatSnapshot.child("chatID").getValue().toString())) {
+                                            mChatListModelsIndex = i;
+                                        }
+                                    }
+
+                                    mChatListAdapter.swapItems(mChatListModelsIndex, 0);
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
                         }
+                    }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -176,7 +193,22 @@ public class ChatListFragment extends Fragment {
             }
         });
 
-        return v;
+
     }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case 121:
+                mChatListAdapter.openChat(item.getGroupId());
+                return true;
+            case 122:
+                System.out.println("Second");
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
 }

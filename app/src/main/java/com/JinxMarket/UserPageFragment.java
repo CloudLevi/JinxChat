@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +40,7 @@ public class UserPageFragment extends Fragment {
     private DatabaseReference mDataBaseUploadsRef;
     private DatabaseReference mDataBaseRef;
     private DatabaseReference mDataBaseUserRef;
+    private DatabaseReference mDataBaseAllUsersRef;
 
     private RecyclerView mRecyclerView;
     private List<AddFragmentModel> mAddFragmentModels;
@@ -49,6 +52,11 @@ public class UserPageFragment extends Fragment {
     private CircleImageView userPic;
     private CircleImageView userStatus;
     private TextView itemCount;
+
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String currentUserID = firebaseUser.getUid();
+
+    private Bundle messageBundle = new Bundle();
 
 
     public UserPageFragment() {
@@ -84,7 +92,11 @@ public class UserPageFragment extends Fragment {
 
         mDataBaseUploadsRef = FirebaseDatabase.getInstance().getReference("Users/" + userID + "/UserUploads");
         mDataBaseUserRef = FirebaseDatabase.getInstance().getReference("Users/" + userID);
+        mDataBaseAllUsersRef = FirebaseDatabase.getInstance().getReference("Users");
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        mContactUserBTN.setVisibility(View.GONE);
+        mContactUserBTN.setEnabled(false);
 
         mDataBaseUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -148,6 +160,40 @@ public class UserPageFragment extends Fragment {
             }
         });
 
+
+        mDataBaseAllUsersRef.child(currentUserID).child("UserChats").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot currentChatSnapshot: dataSnapshot.getChildren()){
+                    if(currentChatSnapshot.child("receiver").getValue().toString().equals(userID) ||
+                            currentChatSnapshot.child("sender").getValue().toString().equals(userID)
+                    ){
+                        messageBundle.putString("userReceiverID", userID);
+                        messageBundle.putString("chatID", currentChatSnapshot.child("chatID").getValue().toString());
+                    }else{
+                        messageBundle.putString("userReceiverID", userID);
+                    }
+                }
+                mContactUserBTN.setEnabled(true);
+                mContactUserBTN.setVisibility(View.VISIBLE);
+
+                mContactUserBTN.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        NavController navController = Navigation.findNavController(v);
+                        navController.navigate(R.id.action_userPagerAdapterFragment_to_chatFragment, messageBundle);
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         mProgressCircle.setVisibility(View.INVISIBLE);
 
     return v;
@@ -158,7 +204,7 @@ public class UserPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mContactUserBTN.setOnClickListener(new View.OnClickListener() {
+        /*mContactUserBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -167,6 +213,6 @@ public class UserPageFragment extends Fragment {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.action_userPagerAdapterFragment_to_chatFragment, bundle);
             }
-        });
+        });*/
     }
 }

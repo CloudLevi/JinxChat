@@ -231,7 +231,8 @@ public class ChatFragment extends Fragment {
     public void onStart() {
         super.onStart();
         messageStatusListening = true;
-        messageSeen(mReceiverUserID);
+        System.out.println("ON START");
+        if(mainChatID != null){messageSeen(mReceiverUserID);}
     }
 
     private void messageSeen(final String userID){

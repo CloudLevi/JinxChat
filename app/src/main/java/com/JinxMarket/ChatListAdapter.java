@@ -2,6 +2,7 @@ package com.JinxMarket;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +32,15 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
     private Context mContext;
     private List<ChatListModel> mChatListModels;
+    private int position;
+    private NavController mNavController;
 
     private String defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/my-application-af75c.appspot.com/o/profilepics%2FDefaultProfilePic.png?alt=media&token=017b6c59-f031-4588-8732-d79c2738317a";
 
-    public ChatListAdapter(Context context, List<ChatListModel> chatListModels){
+    public ChatListAdapter(Context context, List<ChatListModel> chatListModels, NavController navController){
         mContext = context;
         mChatListModels = chatListModels;
+        mNavController = navController;
     }
 
     @NonNull
@@ -54,11 +58,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 holder.layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        NavController navController = Navigation.findNavController(v);
+                        //NavController navController = Navigation.findNavController(v);
                         Bundle bundle = new Bundle();
                         bundle.putString("userReceiverID", mChatListModels.get(position).getSecondUserID());
                         bundle.putString("chatID", mChatListModels.get(position).getChatID());
-                        navController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
+                        mNavController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
                     }
                 });
             }
@@ -175,13 +179,19 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(v);
+                //NavController navController = Navigation.findNavController(v);
                 Bundle bundle = new Bundle();
                 bundle.putString("userReceiverID", mChatListModels.get(position).getSecondUserID());
                 bundle.putString("chatID", mChatListModels.get(position).getChatID());
-                navController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
+                mNavController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
             }
         });
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        holder.itemView.setOnLongClickListener(null);
+        super.onViewRecycled(holder);
     }
 
     @Override
@@ -189,7 +199,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         return mChatListModels.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         public CircleImageView circleImageView;
         public TextView username;
@@ -205,8 +215,34 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             lastMessage = itemView.findViewById(R.id.ChatListLastMessage);
             layout = itemView.findViewById(R.id.ChatListLayout);
             userStatus = itemView.findViewById(R.id.userStatus);
+            itemView.setOnCreateContextMenuListener(this);
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Select The Action");
+            menu.add(this.getAdapterPosition(), 121, 0, "Open Chat");
+            menu.add(this.getAdapterPosition(), 122, 1, "Delete Chat");
+        }
+
     }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void openChat(int position){
+        ChatListModel model = mChatListModels.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putString("userReceiverID", model.getSecondUserID());
+        bundle.putString("chatID", model.getChatID());
+        mNavController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
+    }
+
 
     public void swapItems(int fromPosition,int toPosition){
 
