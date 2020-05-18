@@ -15,20 +15,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.snapshot.BooleanNode;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
+
+    private DatabaseReference chatsReference;
+    private DatabaseReference firstUserReference;
+    private DatabaseReference secondUserReference;
 
     private Context mContext;
     private List<ChatListModel> mChatListModels;
@@ -84,8 +84,9 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         holder.username.setText(chatModel.getUsername());
         holder.lastMessage.setText(chatModel.getLastMessage());
 
-        DatabaseReference firstUserReference = FirebaseDatabase.getInstance().getReference("Users").child(mChatListModels.get(position).getFirstUserID());
-        DatabaseReference secondUserReference = FirebaseDatabase.getInstance().getReference("Users").child(mChatListModels.get(position).getSecondUserID());
+        chatsReference = FirebaseDatabase.getInstance().getReference("Chats");
+        firstUserReference = FirebaseDatabase.getInstance().getReference("Users").child(mChatListModels.get(position).getFirstUserID());
+        secondUserReference = FirebaseDatabase.getInstance().getReference("Users").child(mChatListModels.get(position).getSecondUserID());
 
         firstUserReference.child("UserChats").child(mChatListModels.get(position).getChatID()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -256,6 +257,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         for(int i = 0; i < mChatListModels.size(); i++){
             notifyItemChanged(i, Boolean.valueOf(true));
         }
+    }
+
+    public void deleteChat(int position) {
+        ChatListModel chatModel  = mChatListModels.get(position);
+        String chatID = chatModel.getChatID();
+
+        DatabaseReference secondRef = FirebaseDatabase.getInstance().getReference("Users/" + chatModel.getSecondUserID());
+
+        firstUserReference.child("UserChats").child(chatID).removeValue();
+        secondRef.child("UserChats").child(chatID).removeValue();
+        chatsReference.child(chatID).removeValue();
+        mChatListModels.remove(position);
+        notifyDataSetChanged();
+
     }
 
     public ChatListModel getItem(int position){

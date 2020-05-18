@@ -10,14 +10,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.renderscript.Sampler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,8 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -62,6 +56,7 @@ public class ChatListFragment extends Fragment {
     private ChatListAdapter mChatListAdapter;
 
     private NavController finalNavController;
+    private int chatPositionDeletion;
 
     public ChatListFragment() {
     }
@@ -204,11 +199,17 @@ public class ChatListFragment extends Fragment {
                 mChatListAdapter.openChat(item.getGroupId());
                 return true;
             case 122:
-                System.out.println("Second");
+                chatPositionDeletion = item.getGroupId();
+                DeleteChatDialog dialog = new DeleteChatDialog();
+                dialog.show(getActivity().getSupportFragmentManager(), "DeleteItemDialog");
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
 
+    }
+
+    public void deleteChat(){
+        mChatListAdapter.deleteChat(chatPositionDeletion);
     }
 }
