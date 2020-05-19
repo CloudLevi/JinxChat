@@ -165,16 +165,21 @@ public class UserPageFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot currentChatSnapshot: dataSnapshot.getChildren()){
-                    if(currentChatSnapshot.child("receiver").getValue().toString().equals(userID) ||
-                            currentChatSnapshot.child("sender").getValue().toString().equals(userID)
-                    ){
-                        messageBundle.putString("userReceiverID", userID);
-                        messageBundle.putString("chatID", currentChatSnapshot.child("chatID").getValue().toString());
-                    }else{
-                        messageBundle.putString("userReceiverID", userID);
+                if (dataSnapshot.getValue() != null){
+                    for (DataSnapshot currentChatSnapshot : dataSnapshot.getChildren()) {
+                        if (currentChatSnapshot.child("receiver").getValue().toString().equals(userID) ||
+                                currentChatSnapshot.child("sender").getValue().toString().equals(userID)
+                        ) {
+                            messageBundle.putString("userReceiverID", userID);
+                            messageBundle.putString("chatID", currentChatSnapshot.child("chatID").getValue().toString());
+                        } else {
+                            messageBundle.putString("userReceiverID", userID);
+                        }
                     }
+            }else{
+                    messageBundle.putString("userReceiverID", userID);
                 }
+
                 mContactUserBTN.setEnabled(true);
                 mContactUserBTN.setVisibility(View.VISIBLE);
 

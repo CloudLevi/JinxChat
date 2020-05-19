@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/home" />
     <item
-        android:id="@+id/chatListFragment"
+        android:id="@+id/chatViewPagerAdapter"
         android:icon="@drawable/ic_chat_bubble_black_24dp"
         android:title="@string/chats" />
     <item

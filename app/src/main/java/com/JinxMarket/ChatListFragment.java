@@ -29,6 +29,7 @@ import java.util.List;
 
 public class ChatListFragment extends Fragment {
 
+    public static final CharSequence PAGE_TITLE = "Chats";
     private RecyclerView recyclerView;
 
     private DatabaseReference mRootRef;
@@ -47,11 +48,7 @@ public class ChatListFragment extends Fragment {
     private String lastMessage;
     private String chatID;
 
-    private DataSnapshot updatedSnapshot;
-
     private List<ChatListModel> mChatListModels;
-
-    private Boolean firstTime = true;
 
     private ChatListAdapter mChatListAdapter;
 
@@ -85,9 +82,9 @@ public class ChatListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         registerForContextMenu(recyclerView);
         finalNavController = Navigation.findNavController(view);
-
 
         mRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

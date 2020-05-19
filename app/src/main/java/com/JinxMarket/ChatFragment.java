@@ -231,13 +231,10 @@ public class ChatFragment extends Fragment {
     public void onStart() {
         super.onStart();
         messageStatusListening = true;
-        System.out.println("ON START");
         if(mainChatID != null){messageSeen(mReceiverUserID);}
     }
 
     private void messageSeen(final String userID){
-
-            System.out.println(mainChatID);
 
             currentMessageReference = databaseChatReference.child(mainChatID);
 

@@ -62,7 +62,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                         Bundle bundle = new Bundle();
                         bundle.putString("userReceiverID", mChatListModels.get(position).getSecondUserID());
                         bundle.putString("chatID", mChatListModels.get(position).getChatID());
-                        mNavController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
+                        mNavController.navigate(R.id.action_chatViewPagerAdapter_to_chatFragment, bundle);
                     }
                 });
             }
@@ -184,7 +184,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 Bundle bundle = new Bundle();
                 bundle.putString("userReceiverID", mChatListModels.get(position).getSecondUserID());
                 bundle.putString("chatID", mChatListModels.get(position).getChatID());
-                mNavController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
+                mNavController.navigate(R.id.action_chatViewPagerAdapter_to_chatFragment, bundle);
             }
         });
     }
@@ -241,7 +241,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         Bundle bundle = new Bundle();
         bundle.putString("userReceiverID", model.getSecondUserID());
         bundle.putString("chatID", model.getChatID());
-        mNavController.navigate(R.id.action_chatListFragment_to_chatFragment, bundle);
+        mNavController.navigate(R.id.action_chatViewPagerAdapter_to_chatFragment, bundle);
     }
 
 

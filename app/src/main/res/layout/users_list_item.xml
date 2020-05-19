@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/UsersListLayout"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/colorPrimaryDark">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/UsersListProfileImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        tools:src="@drawable/nazar" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/UsersListUserStatus"
+        android:visibility="invisible"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_alignEnd="@+id/UsersListProfileImage"
+        android:layout_alignBottom="@id/UsersListProfileImage"
+        android:layout_marginStart="8dp"
+        android:src="@color/colorUserStatus" />
+
+    <TextView
+        android:id="@+id/UsersListUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/UsersListProfileImage"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/UsersListProfileImage"
+        android:textColor="@color/PlainTextColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="CloudLevi" />
+
+    <TextView
+        android:id="@+id/UsersListItemCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/UsersListUserName"
+        android:layout_alignStart="@id/UsersListUserName"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/PlainTextColor2"
+        android:textSize="18sp"
+        tools:text="5 items for sale" />
+
+    <LinearLayout
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/BarColor"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

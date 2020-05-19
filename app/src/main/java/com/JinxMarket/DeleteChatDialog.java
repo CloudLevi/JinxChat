@@ -24,8 +24,8 @@ public class DeleteChatDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragNavHost);
-                        ChatListFragment fragment = (ChatListFragment) navHostFragment.getChildFragmentManager().getFragments().get(0);
-                        fragment.deleteChat();
+                        ChatViewPagerAdapter frag = (ChatViewPagerAdapter) navHostFragment.getChildFragmentManager().getFragments().get(0);
+                        frag.getViewPagerAdapter().deleteChatListItem();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

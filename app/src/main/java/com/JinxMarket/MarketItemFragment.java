@@ -118,17 +118,21 @@ public class MarketItemFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        for(DataSnapshot currentChatSnapshot: dataSnapshot.getChildren()){
-                        if(currentChatSnapshot.child("receiver").getValue().toString().equals(addFragmentModel.getUserIdModel()) ||
-                                    currentChatSnapshot.child("sender").getValue().toString().equals(addFragmentModel.getUserIdModel())
-                            ){
-                                messageBundle.putString("userReceiverID", addFragmentModel.getUserIdModel());
-                                messageBundle.putString("chatID", currentChatSnapshot.child("chatID").getValue().toString());
-                            }else{
-                                messageBundle.putString("userReceiverID", addFragmentModel.getUserIdModel());
+                        if (dataSnapshot.getValue() != null){
+                            for (DataSnapshot currentChatSnapshot : dataSnapshot.getChildren()) {
+                                if (currentChatSnapshot.child("receiver").getValue().toString().equals(addFragmentModel.getUserIdModel()) ||
+                                        currentChatSnapshot.child("sender").getValue().toString().equals(addFragmentModel.getUserIdModel())
+                                ) {
+                                    messageBundle.putString("userReceiverID", addFragmentModel.getUserIdModel());
+                                    messageBundle.putString("chatID", currentChatSnapshot.child("chatID").getValue().toString());
+                                } else {
+                                    messageBundle.putString("userReceiverID", addFragmentModel.getUserIdModel());
+                                }
                             }
+                    }else{
+                            messageBundle.putString("userReceiverID", addFragmentModel.getUserIdModel());
                         }
-                        System.out.println("CALLED!#!#$!GUH!");
+
                         mMessageButton.setEnabled(true);
                         mMessageButton.setVisibility(View.VISIBLE);
 
@@ -136,7 +140,6 @@ public class MarketItemFragment extends Fragment {
                             @Override
                             public void onClick(final View v) {
                                 NavController navController = Navigation.findNavController(v);
-                                System.out.println("CONTACT");
                                 navController.navigate(R.id.action_marketItemFragment_to_chatFragment, messageBundle);
 
                             }
