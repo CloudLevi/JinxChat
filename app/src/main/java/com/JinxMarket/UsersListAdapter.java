@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -120,6 +121,11 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     @Override
     public int getItemCount() {
         return mUserModels.size();
+    }
+
+    public void filterList(ArrayList<UserModel> filteredUserModelList) {
+        mUserModels = filteredUserModelList;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

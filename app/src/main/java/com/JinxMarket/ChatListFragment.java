@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.JinxMarket.Notifications.Token;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,8 @@ public class ChatListFragment extends Fragment {
         mUserChatsRef = FirebaseDatabase.getInstance().getReference("Users/" + firebaseUser.getUid() + "/UserChats");
         mSecondUserRef = FirebaseDatabase.getInstance().getReference("Users");
         mChatsRef = FirebaseDatabase.getInstance().getReference("Chats");
+
+        updateToke(FirebaseInstanceId.getInstance().getToken());
 
         return v;
     }
@@ -204,6 +208,12 @@ public class ChatListFragment extends Fragment {
                 return super.onContextItemSelected(item);
         }
 
+    }
+
+    private void updateToke(String token){
+        DatabaseReference tokenReference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        tokenReference.child(firebaseUser.getUid()).setValue(token1);
     }
 
     public void deleteChat(){

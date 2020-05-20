@@ -10,9 +10,12 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +37,8 @@ public class UserListFragment extends Fragment {
     private DatabaseReference mDatabaseUserRef;
     private NavController navController;
 
+    private EditText usersListSearch;
+
     public UserListFragment() {
     }
 
@@ -42,6 +47,8 @@ public class UserListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_user_list, container, false);
+
+        usersListSearch = v.findViewById(R.id.usersListSearch);
 
         usersListRecyclerView = v.findViewById(R.id.usersListRecyclerView);
         usersListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -68,7 +75,7 @@ public class UserListFragment extends Fragment {
                     mUserModels.add(currentUser);
                 }
 
-                UsersListAdapter usersListAdapter = new UsersListAdapter(getContext(), mUserModels, navController);
+                usersListAdapter = new UsersListAdapter(getContext(), mUserModels, navController);
 
                 usersListRecyclerView.setAdapter(usersListAdapter);
 
@@ -80,5 +87,34 @@ public class UserListFragment extends Fragment {
             }
         });
 
+        usersListSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filterList(s.toString());
+            }
+        });
+
+    }
+
+    private void filterList(String text) {
+        ArrayList<UserModel> filteredUserModelList = new ArrayList<>();
+
+        for(UserModel userModel: mUserModels){
+            if(userModel.getUsername().toLowerCase().contains(text.toLowerCase())){
+                filteredUserModelList.add(userModel);
+            }
+        }
+
+        usersListAdapter.filterList(filteredUserModelList);
     }
 }
