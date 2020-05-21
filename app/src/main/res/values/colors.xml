@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#2B7349</color>
     <color name="colorUserStatus">#29A15B</color>
+    <color name="colorUserUnreadMessages">#4192D1</color>
     <color name="colorPrimaryDark">#FFE4D1</color>
     <color name="colorPrimaryComplementary">#FFB785</color>
     <color name="TitleTextColor">#f5fcff</color>

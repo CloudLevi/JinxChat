@@ -17,13 +17,13 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userStatus"
-        android:visibility="invisible"
         android:layout_width="13dp"
         android:layout_height="13dp"
         android:layout_alignEnd="@+id/ChatListProfileImage"
         android:layout_alignBottom="@id/ChatListProfileImage"
         android:layout_marginStart="8dp"
-        android:src="@color/colorUserStatus" />
+        android:src="@color/colorUserStatus"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/ChatListUserName"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ChatListUserName"
         android:layout_alignStart="@id/ChatListUserName"
-        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@id/ChatListMessageCountImage"
         android:ellipsize="end"
         android:maxLines="1"
         android:singleLine="true"
@@ -51,12 +51,37 @@
         android:textSize="18sp"
         tools:text="Hey! I am interested in buying your item and want fo hhhhh" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ChatListMessageCountImage"
+        android:visibility="invisible"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="16dp"
+        android:src="@color/colorUserUnreadMessages" />
+
+    <TextView
+        android:id="@+id/ChatListMessageCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignTop="@id/ChatListMessageCountImage"
+        android:layout_alignBottom="@id/ChatListMessageCountImage"
+        android:layout_alignStart="@id/ChatListMessageCountImage"
+        android:layout_alignEnd="@id/ChatListMessageCountImage"
+        android:src="@color/colorUserStatus"
+        tools:text="25"
+        android:visibility="invisible"
+        android:textColor="@color/White"
+        android:textSize="12sp" />
+
     <LinearLayout
         android:id="@+id/space"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/BarColor"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"/>
+        android:orientation="horizontal" />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -32,10 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference userRef;
     private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    private String userStatus;
-
-    public Boolean hey;
-
     public DeletingViewModel viewModel;
 
 
@@ -51,6 +48,18 @@ public class LoginActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(DeletingViewModel.class);
         viewModel.setData(false);
+
+        if(getIntent() != null &&
+                getIntent().getExtras() != null &&
+                getIntent().getExtras().getString("userID") != null){
+            Intent fromNotification = getIntent();
+            String userID = fromNotification.getExtras().getString("userID");
+            String chatID = fromNotification.getExtras().getString("chatID");
+            Bundle bundle = new Bundle();
+            bundle.putString("userReceiverID", userID);
+            bundle.putString("chatID", chatID);
+            navController.navigate(R.id.action_homeFragment_to_chatFragment, bundle);
+        }
 
     }
 

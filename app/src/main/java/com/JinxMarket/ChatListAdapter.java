@@ -177,6 +177,36 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             }
         });
 
+        chatsReference.child(chatModel.getChatID()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println(chatModel.getChatID());
+                int countUnreadMessages = 0;
+                for(DataSnapshot currentMessage: dataSnapshot.getChildren()){
+                    if(currentMessage.child("isRead").getValue().toString().equals("false")){
+                        countUnreadMessages++;
+                    }
+                }
+
+                if(countUnreadMessages != 0){
+                    System.out.println(countUnreadMessages + " FIRST");
+                    holder.countImage.setVisibility(View.VISIBLE);
+                    holder.countText.setVisibility(View.VISIBLE);
+                    holder.countText.setText(Integer.toString(countUnreadMessages));
+                } else{
+                    System.out.println(countUnreadMessages + " SECOND");
+                    holder.countImage.setVisibility(View.INVISIBLE);
+                    holder.countText.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,6 +237,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         public TextView lastMessage;
         public RelativeLayout layout;
         public ImageView userStatus;
+        public CircleImageView countImage;
+        public TextView countText;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -216,6 +248,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             lastMessage = itemView.findViewById(R.id.ChatListLastMessage);
             layout = itemView.findViewById(R.id.ChatListLayout);
             userStatus = itemView.findViewById(R.id.userStatus);
+            countImage = itemView.findViewById(R.id.ChatListMessageCountImage);
+            countText = itemView.findViewById(R.id.ChatListMessageCountText);
             itemView.setOnCreateContextMenuListener(this);
         }
 

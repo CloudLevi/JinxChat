@@ -1,12 +1,13 @@
 package com.JinxMarket.Notifications;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.JinxMarket.LoginActivity;
@@ -29,8 +30,43 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(firebaseUser != null && sented.equals(firebaseUser.getUid())){
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                sendOreoNotification(remoteMessage);
+            }
+
             sendNotification(remoteMessage);
         }
+    }
+
+    private void sendOreoNotification(RemoteMessage remoteMessage){
+        String user = remoteMessage.getData().get("user");
+        String icon = remoteMessage.getData().get("icon");
+        String title = remoteMessage.getData().get("title");
+        String body = remoteMessage.getData().get("body");
+        String chatID = remoteMessage.getData().get("chatID");
+
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+        int k = Integer.parseInt(user.replaceAll("[\\D]", ""));
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("userID", user);
+        bundle.putString("chatID", chatID);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, k, intent, PendingIntent.FLAG_ONE_SHOT);
+        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        OreoNotification oreoNotification = new OreoNotification(this);
+        Notification.Builder builder = oreoNotification.getOreoNotification(title, body, pendingIntent, defaultSound, icon);
+
+        int i = 0;
+        if( k > 0 ){
+            i = k;
+        }
+
+        oreoNotification.getNotificationManager().notify(i, builder.build());
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
@@ -39,12 +75,15 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         String icon = remoteMessage.getData().get("icon");
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
+        String chatID = remoteMessage.getData().get("chatID");
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int k = Integer.parseInt(user.replaceAll("[\\D]", ""));
+
         Intent intent = new Intent(this, LoginActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userID", user);
+        bundle.putString("chatID", chatID);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, k, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -56,6 +95,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent);
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 

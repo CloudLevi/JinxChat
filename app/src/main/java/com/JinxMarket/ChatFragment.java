@@ -320,7 +320,7 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserModel user = dataSnapshot.getValue(UserModel.class);
                 if(notify){
-                    sendNotification(receiver, user.getUsername(), msg);
+                    sendNotification(receiver, user.getUsername(), msg, mainChatID);
                 }
                 notify = false;
             }
@@ -333,7 +333,7 @@ public class ChatFragment extends Fragment {
 
     }
 
-    private void sendNotification(String receiver, final String username, final String message){
+    private void sendNotification(String receiver, final String username, final String message, final String mainChatID){
         DatabaseReference tokenReference = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokenReference.orderByKey().equalTo(receiver);
         query.addValueEventListener(new ValueEventListener() {
@@ -342,7 +342,7 @@ public class ChatFragment extends Fragment {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Token currentToken = postSnapshot.getValue(Token.class);
                     Data data = new Data(firebaseUser.getUid(), R.mipmap.ic_launcher, username+":  "+message, "New Message",
-                            mReceiverUserID);
+                            mReceiverUserID, mainChatID);
 
                     Sender sender = new Sender(data, currentToken.getToken());
 
