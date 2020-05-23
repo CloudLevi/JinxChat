@@ -84,8 +84,6 @@ public class DeleteAccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
-
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

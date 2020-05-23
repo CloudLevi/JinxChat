@@ -90,6 +90,38 @@ public class ChatListFragment extends Fragment {
         registerForContextMenu(recyclerView);
         finalNavController = Navigation.findNavController(view);
 
+        retrieveChatList();
+
+        mUserChatsRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                retrieveChatList();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                retrieveChatList();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void retrieveChatList() {
         mRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot rootSnapshot) {
@@ -113,11 +145,9 @@ public class ChatListFragment extends Fragment {
 
                             if(rootSnapshot.child("Users").child(secondUserID).getValue() != null){
 
-
                                 secondUserImageURL = rootSnapshot.child("Users").child(secondUserID).child("imageURL").getValue().toString();
                                 secondUserUsername = rootSnapshot.child("Users").child(secondUserID).child("username").getValue().toString();
                                 secondUserStatus = rootSnapshot.child("Users").child(secondUserID).child("status").getValue().toString();
-
 
                             }else{
                                 secondUserImageURL = "https://firebasestorage.googleapis.com/v0/b/my-application-af75c.appspot.com/o/profilepics%2FDefaultProfilePic.png?alt=media&token=017b6c59-f031-4588-8732-d79c2738317a";
@@ -188,8 +218,6 @@ public class ChatListFragment extends Fragment {
 
             }
         });
-
-
     }
 
     @Override

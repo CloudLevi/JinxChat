@@ -428,5 +428,8 @@
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_chatViewPagerAdapter_self"
+            app:destination="@id/chatViewPagerAdapter" />
     </fragment>
 </navigation>

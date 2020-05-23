@@ -180,17 +180,21 @@ public class UserPageFragment extends Fragment {
                     messageBundle.putString("userReceiverID", userID);
                 }
 
-                mContactUserBTN.setEnabled(true);
-                mContactUserBTN.setVisibility(View.VISIBLE);
+                if(!userID.equals(firebaseUser.getUid())){
 
-                mContactUserBTN.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        NavController navController = Navigation.findNavController(v);
-                        navController.navigate(R.id.action_userPagerAdapterFragment_to_chatFragment, messageBundle);
+                    mContactUserBTN.setEnabled(true);
+                    mContactUserBTN.setVisibility(View.VISIBLE);
 
-                    }
-                });
+                    mContactUserBTN.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(final View v) {
+                            NavController navController = Navigation.findNavController(v);
+                            navController.navigate(R.id.action_userPagerAdapterFragment_to_chatFragment, messageBundle);
+
+                        }
+                    });
+
+                }
             }
 
             @Override

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     private DatabaseReference chatsReference;
     private DatabaseReference firstUserReference;
     private DatabaseReference secondUserReference;
+
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     private Context mContext;
     private List<ChatListModel> mChatListModels;
@@ -180,21 +184,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         chatsReference.child(chatModel.getChatID()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println(chatModel.getChatID());
                 int countUnreadMessages = 0;
                 for(DataSnapshot currentMessage: dataSnapshot.getChildren()){
-                    if(currentMessage.child("isRead").getValue().toString().equals("false")){
+                    if(currentMessage.child("isRead").getValue().toString().equals("false") && !currentMessage.child("sender").getValue().toString().equals(firebaseUser.getUid())){
                         countUnreadMessages++;
                     }
                 }
 
                 if(countUnreadMessages != 0){
-                    System.out.println(countUnreadMessages + " FIRST");
                     holder.countImage.setVisibility(View.VISIBLE);
                     holder.countText.setVisibility(View.VISIBLE);
                     holder.countText.setText(Integer.toString(countUnreadMessages));
                 } else{
-                    System.out.println(countUnreadMessages + " SECOND");
                     holder.countImage.setVisibility(View.INVISIBLE);
                     holder.countText.setVisibility(View.INVISIBLE);
                 }

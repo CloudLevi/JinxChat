@@ -1,5 +1,6 @@
 package com.JinxMarket;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -202,6 +203,12 @@ public class ChatFragment extends Fragment {
         return v;
     }
 
+    private void currentUser(String userID){
+        SharedPreferences.Editor editor = this.getActivity().getSharedPreferences("CurrentUserPrefs", 0).edit();
+        editor.putString("currentUserID", userID);
+        editor.apply();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -399,8 +406,17 @@ public class ChatFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        currentUser(mReceiverUserID);
+        SharedPreferences currentUserPrefs = this.getActivity().getSharedPreferences("CurrentUserPrefs", 0);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         messageStatusListening = false;
+        currentUser("null");
+        SharedPreferences currentUserPrefs = this.getActivity().getSharedPreferences("CurrentUserPrefs", 0);
     }
 }

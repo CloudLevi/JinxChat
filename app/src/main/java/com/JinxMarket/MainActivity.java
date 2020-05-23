@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         SharedPreferences appSettingPrefs = getSharedPreferences("AppSettingPrefs", 0);
+        SharedPreferences currentUserPrefs = getSharedPreferences("CurrentUserPrefs", 0);
         Boolean isNightModeOn = appSettingPrefs.getBoolean("NightMode", false);
 
 

@@ -1,13 +1,17 @@
 package com.JinxMarket;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 public class ChatViewPagerAdapter extends Fragment {
 
@@ -50,7 +54,6 @@ public class ChatViewPagerAdapter extends Fragment {
         private static final int NUM_ITEMS = 2;
 
         private ChatListFragment chatListFragment;
-        private UserListFragment userListFragment;
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -85,7 +88,10 @@ public class ChatViewPagerAdapter extends Fragment {
         }
 
         public void deleteChatListItem(){
-            chatListFragment.deleteChat();
+            if(chatListFragment != null){chatListFragment.deleteChat();}
+            else{
+                Log.d("Exception", "ChatListFragment is NULL");
+            }
         }
 
     }
